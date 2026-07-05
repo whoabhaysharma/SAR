@@ -59,7 +59,9 @@ async function main(): Promise<void> {
     wildcard: false,
   })
 
-  await app.register(collectorPlugin, { batcher, clickHouse, database: config.clickHouse.database })
+  const adminToken = process.env.ADMIN_TOKEN || ''
+
+  await app.register(collectorPlugin, { batcher, clickHouse, database: config.clickHouse.database, adminToken })
 
   await app.listen({ port: config.port, host: '0.0.0.0' })
   console.log(`[analytics] listening on :${config.port}`)

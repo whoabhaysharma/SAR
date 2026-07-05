@@ -10,6 +10,15 @@ interface CollectorOpts {
   batcher: ClickHouseBatcher
   clickHouse?: import('@clickhouse/client').ClickHouseClient
   database?: string
+  adminToken?: string
+}
+
+function requireToken(opts: CollectorOpts) {
+  return async function (req: FastifyRequest, reply: FastifyReply) {
+    const token = (req.query as Record<string, string>).token || req.headers['x-api-key'] as string
+    if (opts.adminToken && token === opts.adminToken) return
+    return reply.status(401).send({ error: 'Unauthorized' })
+  }
 }
 
 export async function collectorPlugin(app: FastifyInstance, opts: CollectorOpts): Promise<void> {
@@ -56,12 +65,14 @@ export async function collectorPlugin(app: FastifyInstance, opts: CollectorOpts)
 
   app.get('/health', {
     logLevel: 'error',
+    preHandler: requireToken(opts),
   }, async (_req: FastifyRequest, _reply: FastifyReply) => {
     return { ok: true, uptime: process.uptime() }
   })
 
   app.get('/recent', {
     logLevel: 'error',
+    preHandler: requireToken(opts),
   }, async (_req: FastifyRequest, reply: FastifyReply) => {
     if (!opts.clickHouse) {
       return reply.send([])

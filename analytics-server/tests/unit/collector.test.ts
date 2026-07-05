@@ -2,10 +2,10 @@ import { describe, it, expect, vi } from 'vitest'
 import Fastify from 'fastify'
 import { collectorPlugin } from '../../src/collector.ts'
 
-function createApp(batcher?: { push: ReturnType<typeof vi.fn> }) {
+function createApp(batcher?: { push: ReturnType<typeof vi.fn> }, adminToken?: string) {
   const b = batcher || { push: vi.fn() }
   const app = Fastify({ logger: false })
-  app.register(collectorPlugin, { batcher: b as any })
+  app.register(collectorPlugin, { batcher: b as any, adminToken })
   return { app, batcher: b }
 }
 
@@ -55,10 +55,17 @@ describe('collectorPlugin', () => {
   })
 
   it('returns health check', async () => {
-    const { app } = createApp()
-    const res = await app.inject({ method: 'GET', url: '/health' })
+    const { app } = createApp(undefined, 'test-token')
+    const res = await app.inject({ method: 'GET', url: '/health?token=test-token' })
     expect(res.statusCode).toBe(200)
     expect(res.json().ok).toBe(true)
+    await app.close()
+  })
+
+  it('rejects health check without token', async () => {
+    const { app } = createApp(undefined, 'test-token')
+    const res = await app.inject({ method: 'GET', url: '/health' })
+    expect(res.statusCode).toBe(401)
     await app.close()
   })
 

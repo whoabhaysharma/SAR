@@ -49,7 +49,8 @@ td{padding:0.3rem 0.5rem;border-bottom:1px solid #1a1a1a;max-width:120px;overflo
 
 <header>
   <h1>Analytics Tester</h1>
-  <div class="status">
+  <div class="status" style="gap:0.8rem">
+    <span style="font-size:0.75rem;color:#555">Token: <input id="tokenInput" placeholder="(none)" style="width:100px;background:#111;border:1px solid #2a2a2a;border-radius:4px;padding:0.15rem 0.4rem;color:#e0e0e0;font-size:0.75rem" /></span>
     <span class="dot ok" id="statusDot"></span>
     <span id="statusText">checking...</span>
   </div>
@@ -119,8 +120,15 @@ td{padding:0.3rem 0.5rem;border-bottom:1px solid #1a1a1a;max-width:120px;overflo
 const BASE = ''
 const PUB = () => document.getElementById('pub').value || 'pub-test'
 const SLOT = () => document.getElementById('slot').value || 'leaderboard'
+const TOKEN = () => document.getElementById('tokenInput').value || ''
 const LOG = document.getElementById('log')
 const RECENT = document.getElementById('recent')
+
+function getHeaders() {
+  const h = {}
+  if (TOKEN()) h['x-api-key'] = TOKEN()
+  return h
+}
 
 function writeLog(msg, cls='') {
   const d = document.createElement('div')
@@ -165,7 +173,7 @@ function sendCustom() {
 
 function fetchRecent() {
   RECENT.innerHTML = '<div class="empty">loading...</div>'
-  fetch(`${BASE}/recent`)
+  fetch(`${BASE}/recent`, { headers: getHeaders() })
     .then(r => r.json())
     .then(rows => {
       if (!rows.length) {
@@ -187,7 +195,7 @@ function fetchRecent() {
 
 // Health check
 function checkHealth() {
-  fetch(`${BASE}/health`)
+  fetch(`${BASE}/health`, { headers: getHeaders() })
     .then(r => r.json())
     .then(d => {
       document.getElementById('statusDot').className = 'dot ok'

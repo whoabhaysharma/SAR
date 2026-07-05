@@ -1,0 +1,46 @@
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.3
+    restart: unless-stopped
+    environment:
+      CLICKHOUSE_USER: analytics
+      CLICKHOUSE_PASSWORD: analytics123
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+    healthcheck:
+      test: ["CMD", "clickhouse-client", "--query", "SELECT 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  analytics:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      NODE_ENV: "production"
+      PORT: "8080"
+      CLICKHOUSE_HOST: "http://clickhouse:8123"
+      CLICKHOUSE_USER: analytics
+      CLICKHOUSE_PASSWORD: analytics123
+      CLICKHOUSE_DB: analytics
+      ADMIN_TOKEN: "admin-secret-token"
+      BATCH_MAX_SIZE: "1000"
+      BATCH_INTERVAL_MS: "5000"
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health?token=admin-secret-token"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+volumes:
+  clickhouse_data:

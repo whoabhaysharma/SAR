@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Tester</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0d0d0d;color:#e0e0e0;min-height:100vh}
+header{background:#1a1a1a;border-bottom:1px solid #2a2a2a;padding:1rem 1.5rem;display:flex;align-items:center;gap:1rem}
+header h1{font-size:1.1rem;font-weight:600;color:#fff}
+.status{display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;margin-left:auto}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.dot.ok{background:#22c55e;box-shadow:0 0 6px #22c55e}
+.dot.err{background:#ef4444;box-shadow:0 0 6px #ef4444}
+.main{display:flex;gap:1.5rem;padding:1.5rem;max-width:1200px;margin:0 auto}
+@media(max-width:800px){.main{flex-direction:column}}
+.card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:1rem}
+.card h2{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:#9ca3af;margin-bottom:0.75rem}
+.left{flex:1;min-width:0}
+.right{width:400px;flex-shrink:0}
+@media(max-width:800px){.right{width:100%}}
+.btn-group{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem}
+.btn{background:#2a2a2a;color:#e0e0e0;border:1px solid #3a3a3a;border-radius:6px;padding:0.5rem 1rem;font-size:0.85rem;cursor:pointer;transition:all .15s}
+.btn:hover{background:#3a3a3a;border-color:#555}
+.btn.primary{background:#2563eb;border-color:#2563eb;color:#fff}
+.btn.primary:hover{background:#1d4ed8}
+.btn.green{background:#16a34a;border-color:#16a34a;color:#fff}
+.btn.green:hover{background:#15803d}
+.btn.yellow{background:#ca8a04;border-color:#ca8a04;color:#fff}
+.btn.yellow:hover{background:#a16207}
+.btn.red{background:#dc2626;border-color:#dc2626;color:#fff}
+.btn.red:hover{background:#b91c1c}
+input,select{background:#111;color:#e0e0e0;border:1px solid #2a2a2a;border-radius:6px;padding:0.5rem;font-size:0.85rem;width:100%}
+.form-row{display:flex;gap:0.5rem;margin-bottom:0.5rem;align-items:end}
+.form-row label{font-size:0.75rem;color:#9ca3af;display:block;margin-bottom:0.2rem}
+.form-row .field{flex:1}
+.log{font-family:'SF Mono','Fira Code',monospace;font-size:0.75rem;line-height:1.5;max-height:400px;overflow-y:auto}
+.log div{padding:2px 0;border-bottom:1px solid #1a1a1a;color:#9ca3af}
+.log div:last-child{border-bottom:none}
+.log .s{color:#22c55e}.log .e{color:#ef4444}
+table{width:100%;border-collapse:collapse;font-size:0.78rem;font-family:'SF Mono','Fira Code',monospace}
+th{text-align:left;color:#9ca3af;font-weight:500;padding:0.3rem 0.5rem;border-bottom:1px solid #2a2a2a}
+td{padding:0.3rem 0.5rem;border-bottom:1px solid #1a1a1a;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.empty{color:#555;font-style:italic;padding:1rem;text-align:center}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Analytics Tester</h1>
+  <div class="status" style="gap:0.8rem">
+    <span style="font-size:0.75rem;color:#555">Token: <input id="tokenInput" placeholder="(none)" style="width:100px;background:#111;border:1px solid #2a2a2a;border-radius:4px;padding:0.15rem 0.4rem;color:#e0e0e0;font-size:0.75rem" /></span>
+    <span class="dot ok" id="statusDot"></span>
+    <span id="statusText">checking...</span>
+  </div>
+</header>
+
+<div class="main">
+
+<div class="left">
+  <div class="card" style="margin-bottom:1rem">
+    <h2>Events Timeline</h2>
+    <div class="log" id="log">Loading...</div>
+  </div>
+</div>
+
+<div class="right">
+  <div class="card" style="margin-bottom:1rem">
+    <h2>Quick Send</h2>
+    <div class="btn-group">
+      <button class="btn green" onclick="send('start')">Start</button>
+      <button class="btn" onclick="send('quartile',{quartile:1,progress:'25%'})">25%</button>
+      <button class="btn" onclick="send('quartile',{quartile:2,progress:'50%'})">50%</button>
+      <button class="btn" onclick="send('quartile',{quartile:3,progress:'75%'})">75%</button>
+      <button class="btn yellow" onclick="send('complete')">Complete</button>
+      <button class="btn red" onclick="send('error',{error:'No+fill'})">Error</button>
+      <button class="btn primary" onclick="send('impression')">Impression</button>
+      <button class="btn" onclick="send('adloaded',{duration:30,mediaCount:3,tagUrl:'https://ads.example.com/vast.xml'})">Ad Loaded</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1rem">
+    <h2>Custom Event</h2>
+    <div class="form-row">
+      <div class="field">
+        <label>Publisher</label>
+        <input id="pub" value="pub-test" />
+      </div>
+      <div class="field">
+        <label>Slot</label>
+        <input id="slot" value="leaderboard" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="field">
+        <label>Event</label>
+        <input id="evt" value="custom_event" />
+      </div>
+      <div class="field">
+        <label>Extra (key=val&key2=val2)</label>
+        <input id="extra" value="foo=bar" placeholder="key=val&key2=val2" />
+      </div>
+    </div>
+    <button class="btn primary" onclick="sendCustom()" style="width:100%;margin-top:0.5rem">Send Custom Event</button>
+  </div>
+
+  <div class="card">
+    <h2>Recent Events</h2>
+    <div style="margin-bottom:0.5rem">
+      <button class="btn" onclick="fetchRecent()" style="width:100%">Refresh</button>
+    </div>
+    <div id="recent"><div class="empty">Click refresh</div></div>
+  </div>
+
+</div>
+</div>
+
+<script>
+const BASE = ''
+const PUB = () => document.getElementById('pub').value || 'pub-test'
+const SLOT = () => document.getElementById('slot').value || 'leaderboard'
+const TOKEN = () => document.getElementById('tokenInput').value || ''
+const LOG = document.getElementById('log')
+const RECENT = document.getElementById('recent')
+
+function getHeaders() {
+  const h = {}
+  if (TOKEN()) h['x-api-key'] = TOKEN()
+  return h
+}
+
+function writeLog(msg, cls='') {
+  const d = document.createElement('div')
+  d.className = cls
+  d.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`
+  LOG.appendChild(d)
+  LOG.scrollTop = LOG.scrollHeight
+}
+
+function send(event, extra) {
+  const pub = PUB()
+  const slot = SLOT()
+  const ts = Date.now()
+  let url = `${BASE}/collect?event=${event}&publisher=${pub}&slot=${slot}&ts=${ts}`
+  if (extra) {
+    for (const [k, v] of Object.entries(extra)) {
+      url += `&${k}=${v}`
+    }
+  }
+  const s = performance.now()
+  fetch(url)
+    .then(r => {
+      const ms = Math.round(performance.now() - s)
+      if (r.ok) writeLog(`200 ${event} → ${pub}/${slot} (${ms}ms)`, 's')
+      else writeLog(`${r.status} ${event} → ${pub}/${slot}`, 'e')
+    })
+    .catch(e => writeLog(`ERR ${event}: ${e.message}`, 'e'))
+}
+
+function sendCustom() {
+  const evt = document.getElementById('evt').value || 'custom'
+  const extraRaw = document.getElementById('extra').value
+  const extra = {}
+  if (extraRaw) {
+    extraRaw.split('&').forEach(p => {
+      const [k, v] = p.split('=')
+      if (k) extra[k] = v || ''
+    })
+  }
+  send(evt, Object.keys(extra).length ? extra : undefined)
+}
+
+function fetchRecent() {
+  RECENT.innerHTML = '<div class="empty">loading...</div>'
+  fetch(`${BASE}/recent`, { headers: getHeaders() })
+    .then(r => r.json())
+    .then(rows => {
+      if (!rows.length) {
+        RECENT.innerHTML = '<div class="empty">No events yet</div>'
+        return
+      }
+      let html = '<table><tr><th>Time</th><th>Event</th><th>Publisher</th><th>Slot</th></tr>'
+      rows.slice(0, 20).forEach(r => {
+        const t = (r.time || '').slice(11, 19)
+        html += `<tr><td>${t}</td><td>${r.event}</td><td>${r.publisher}</td><td>${r.slot}</td></tr>`
+      })
+      html += '</table>'
+      RECENT.innerHTML = html
+    })
+    .catch(e => {
+      RECENT.innerHTML = `<div class="empty">Error: ${e.message}</div>`
+    })
+}
+
+// Health check
+function checkHealth() {
+  fetch(`${BASE}/health`, { headers: getHeaders() })
+    .then(r => r.json())
+    .then(d => {
+      document.getElementById('statusDot').className = 'dot ok'
+      document.getElementById('statusText').textContent = `OK uptime: ${Math.round(d.uptime)}s`
+      writeLog(`Server healthy (uptime: ${Math.round(d.uptime)}s)`, 's')
+    })
+    .catch(e => {
+      document.getElementById('statusDot').className = 'dot err'
+      document.getElementById('statusText').textContent = 'Offline'
+      writeLog(`Server offline: ${e.message}`, 'e')
+    })
+}
+
+checkHealth()
+writeLog('Analytics Tester ready — click any button to send events')
+</script>
+</body>
+</html>

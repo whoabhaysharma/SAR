@@ -1,9 +1,14 @@
 import Fastify from 'fastify'
+import staticFiles from '@fastify/static'
 import { createClient } from '@clickhouse/client'
+import { join, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { ClickHouseBatcher } from './batcher.js'
 import { collectorPlugin } from './collector.js'
 import { CREATE_TABLE } from './schema.js'
 import type { ServerConfig } from './types.js'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const config: ServerConfig = {
   port: Number(process.env.PORT) || 8080,
@@ -54,7 +59,13 @@ async function main(): Promise<void> {
     },
   })
 
-  await app.register(collectorPlugin, { batcher })
+  await app.register(staticFiles, {
+    root: join(__dirname, '../public'),
+    prefix: '/',
+    wildcard: false,
+  })
+
+  await app.register(collectorPlugin, { batcher, clickHouse, database: config.clickHouse.database })
 
   await app.listen({ port: config.port, host: '0.0.0.0' })
   console.log(`[analytics] listening on :${config.port}`)

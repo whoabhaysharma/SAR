@@ -1,7 +1,7 @@
-import { createServer } from 'node:http'
+import Fastify from 'fastify'
 import { createClient } from '@clickhouse/client'
 import { ClickHouseBatcher } from './batcher.js'
-import { createCollector } from './collector.js'
+import { collectorPlugin } from './collector.js'
 import { CREATE_TABLE } from './schema.js'
 import type { ServerConfig } from './types.js'
 
@@ -18,7 +18,7 @@ const config: ServerConfig = {
 }
 
 async function main(): Promise<void> {
-  const client = createClient({
+  const clickHouse = createClient({
     url: config.clickHouse.host,
     username: config.clickHouse.username,
     password: config.clickHouse.password,
@@ -28,41 +28,49 @@ async function main(): Promise<void> {
     },
   })
 
-  await client.command({ query: `CREATE DATABASE IF NOT EXISTS ${config.clickHouse.database}` })
-  await client.command({ query: `CREATE TABLE IF NOT EXISTS ${config.clickHouse.database}.ad_events (event String, publisher String, slot String, ts UInt64, time DateTime, tag String DEFAULT '', error String DEFAULT '', quartile UInt8 DEFAULT 0, duration UInt32 DEFAULT 0, mediaCount UInt8 DEFAULT 0, tagUrl String DEFAULT '', progress String DEFAULT '', ip String DEFAULT '', userAgent String DEFAULT '', referer String DEFAULT '') ENGINE = MergeTree ORDER BY (publisher, time) TTL time + INTERVAL 90 DAY DELETE` })
-  await client.exec({ query: `USE ${config.clickHouse.database}` })
+  await clickHouse.command({ query: `CREATE DATABASE IF NOT EXISTS ${config.clickHouse.database}` })
+  await clickHouse.command({
+    query: `CREATE TABLE IF NOT EXISTS ${config.clickHouse.database}.ad_events (
+      event String, publisher String, slot String, ts UInt64, time DateTime,
+      tag String DEFAULT '', error String DEFAULT '', quartile UInt8 DEFAULT 0,
+      duration UInt32 DEFAULT 0, mediaCount UInt8 DEFAULT 0, tagUrl String DEFAULT '',
+      progress String DEFAULT '', ip String DEFAULT '', userAgent String DEFAULT '',
+      referer String DEFAULT ''
+    ) ENGINE = MergeTree ORDER BY (publisher, time) TTL time + INTERVAL 90 DAY DELETE`,
+  })
+  await clickHouse.exec({ query: `USE ${config.clickHouse.database}` })
 
-  const batcher = new ClickHouseBatcher(client, {
+  const batcher = new ClickHouseBatcher(clickHouse, {
     maxSize: config.batchMaxSize,
     maxIntervalMs: config.batchMaxIntervalMs,
     database: config.clickHouse.database,
   })
-
   batcher.start()
 
-  const handler = createCollector(batcher)
-  const server = createServer(handler)
-
-  server.listen(config.port, () => {
-    console.log(`[analytics] listening on :${config.port}`)
-    console.log(`[analytics] collecting at /collect`)
-    console.log(`[analytics] health at /health`)
-    console.log(`[analytics] batch size: ${config.batchMaxSize} / interval: ${config.batchMaxIntervalMs}ms`)
+  const app = Fastify({
+    logger: {
+      level: 'warn',
+      transport: { target: 'pino-pretty', options: { colorize: true, translateTime: 'HH:MM:ss' } },
+    },
   })
 
-  process.on('SIGTERM', async () => {
+  await app.register(collectorPlugin, { batcher })
+
+  await app.listen({ port: config.port, host: '0.0.0.0' })
+  console.log(`[analytics] listening on :${config.port}`)
+  console.log(`[analytics] collecting at /collect`)
+  console.log(`[analytics] health at /health`)
+  console.log(`[analytics] batch size: ${config.batchMaxSize} / interval: ${config.batchMaxIntervalMs}ms`)
+
+  const shutdown = async () => {
     console.log('[analytics] shutting down...')
     await batcher.stop()
-    await client.close()
-    server.close()
-  })
+    await clickHouse.close()
+    await app.close()
+  }
 
-  process.on('SIGINT', async () => {
-    console.log('[analytics] shutting down...')
-    await batcher.stop()
-    await client.close()
-    server.close()
-  })
+  process.on('SIGTERM', shutdown)
+  process.on('SIGINT', shutdown)
 }
 
 main().catch(err => {

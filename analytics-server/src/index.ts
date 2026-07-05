@@ -19,10 +19,9 @@ const config: ServerConfig = {
 
 async function main(): Promise<void> {
   const client = createClient({
-    host: config.clickHouse.host,
+    url: config.clickHouse.host,
     username: config.clickHouse.username,
     password: config.clickHouse.password,
-    database: config.clickHouse.database,
     clickhouse_settings: {
       async_insert: 1,
       wait_for_async_insert: 0,
@@ -30,11 +29,13 @@ async function main(): Promise<void> {
   })
 
   await client.command({ query: `CREATE DATABASE IF NOT EXISTS ${config.clickHouse.database}` })
-  await client.command({ query: CREATE_TABLE })
+  await client.command({ query: `CREATE TABLE IF NOT EXISTS ${config.clickHouse.database}.ad_events (event String, publisher String, slot String, ts UInt64, time DateTime, tag String DEFAULT '', error String DEFAULT '', quartile UInt8 DEFAULT 0, duration UInt32 DEFAULT 0, mediaCount UInt8 DEFAULT 0, tagUrl String DEFAULT '', progress String DEFAULT '', ip String DEFAULT '', userAgent String DEFAULT '', referer String DEFAULT '') ENGINE = MergeTree ORDER BY (publisher, time) TTL time + INTERVAL 90 DAY DELETE` })
+  await client.exec({ query: `USE ${config.clickHouse.database}` })
 
   const batcher = new ClickHouseBatcher(client, {
     maxSize: config.batchMaxSize,
     maxIntervalMs: config.batchMaxIntervalMs,
+    database: config.clickHouse.database,
   })
 
   batcher.start()

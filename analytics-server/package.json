@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "start": "node dist/index.js",
-    "build": "tsc"
+    "dev": "CLICKHOUSE_HOST=http://localhost:8123 CLICKHOUSE_USER=analytics CLICKHOUSE_PASSWORD=analytics123 CLICKHOUSE_DB=analytics tsx watch src/index.ts",
+    "start": "CLICKHOUSE_HOST=http://localhost:8123 CLICKHOUSE_USER=analytics CLICKHOUSE_PASSWORD=analytics123 CLICKHOUSE_DB=analytics node dist/index.js",
+    "clickhouse": "docker rm -f clickhouse 2>/dev/null; docker run -d --name clickhouse -e CLICKHOUSE_USER=analytics -e CLICKHOUSE_PASSWORD=analytics123 -p 8123:8123 -p 9000:9000 clickhouse/clickhouse-server:latest"
   },
   "dependencies": {
     "@clickhouse/client": "^1.9.0"

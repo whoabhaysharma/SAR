@@ -9,12 +9,12 @@ export class ClickHouseBatcher {
   private client: import('@clickhouse/client').ClickHouseClient
   private queue: QueuedEvent[] = []
   private flushTimer: ReturnType<typeof setInterval> | null = null
-  private config: { maxSize: number; maxIntervalMs: number }
+  private config: { maxSize: number; maxIntervalMs: number; database: string }
   private flushing = false
 
   constructor(
     client: import('@clickhouse/client').ClickHouseClient,
-    config: { maxSize: number; maxIntervalMs: number }
+    config: { maxSize: number; maxIntervalMs: number; database: string }
   ) {
     this.client = client
     this.config = config
@@ -53,7 +53,7 @@ export class ClickHouseBatcher {
 
     try {
       await this.client.insert({
-        table: 'ad_events',
+        table: `\`${this.config.database}\`.ad_events`,
         values: rows,
         format: 'JSONEachRow',
       })

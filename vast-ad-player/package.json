@@ -1,0 +1,60 @@
+{
+  "name": "vast-ad-player",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/vast-ad-player.js",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/vast-ad-player.js",
+      "require": "./dist/vast-ad-player.umd.cjs"
+    },
+    "./core": {
+      "types": "./src/core/index.ts",
+      "import": "./src/core/index.ts"
+    },
+    "./player": {
+      "types": "./src/player/index.ts",
+      "import": "./src/player/index.ts"
+    },
+    "./vast": {
+      "types": "./src/vast/index.ts",
+      "import": "./src/vast/index.ts"
+    },
+    "./vast/parser": {
+      "types": "./src/vast/parser.ts",
+      "import": "./src/vast/parser.ts"
+    },
+    "./vast/fetcher": {
+      "types": "./src/vast/fetcher.ts",
+      "import": "./src/vast/fetcher.ts"
+    },
+    "./plugins": {
+      "types": "./src/plugins/index.ts",
+      "import": "./src/plugins/index.ts"
+    },
+    "./plugins/viewport": {
+      "types": "./src/plugins/viewport.ts",
+      "import": "./src/plugins/viewport.ts"
+    },
+    "./plugins/html": {
+      "types": "./src/plugins/html.ts",
+      "import": "./src/plugins/html.ts"
+    },
+    "./plugins/script": {
+      "types": "./src/plugins/script.ts",
+      "import": "./src/plugins/script.ts"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0"
+  }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VAST Ad Player Demo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <h1>VAST Ad Player</h1>
+
+    <div class="layout">
+      <div class="player-section">
+        <div id="ad-container"></div>
+        <div id="status">State: IDLE</div>
+      </div>
+
+      <div class="panel">
+        <h2>VAST Tags</h2>
+        <textarea id="vast-tags" rows="6"></textarea>
+
+        <div class="strategy-select">
+          <label>Strategy:
+            <select id="strategy">
+              <option value="first-valid-media">First Valid Media</option>
+              <option value="first-response">First Response</option>
+            </select>
+          </label>
+          <label>Muted:
+            <input type="checkbox" id="muted" />
+          </label>
+          <label>Autoplay:
+            <input type="checkbox" id="autoplay" checked />
+          </label>
+          <label>Viewport:
+            <input type="checkbox" id="viewport" />
+          </label>
+        </div>
+
+        <div class="btn-row">
+          <button id="load-btn" class="primary">Load &amp; Play</button>
+          <button id="play-btn">Play</button>
+          <button id="pause-btn">Pause</button>
+          <button id="destroy-btn" class="danger">Destroy</button>
+        </div>
+
+        <h2>Event Log</h2>
+        <div id="log"></div>
+      </div>
+    </div>
+
+    <details class="embed-guide">
+      <summary>Publisher Embed Guide</summary>
+      <p>Serve <code>dist/vast-ad-player.umd.cjs</code> from your CDN, then publishers add:</p>
+<pre><code>&lt;div id="ad-container" style="width:640px;height:360px"&gt;&lt;/div&gt;
+&lt;script src="https://your-cdn.com/vast-ad-player.umd.cjs"&gt;&lt;/script&gt;
+&lt;script&gt;
+  var player = new VastAdPlayer({
+    container: '#ad-container',
+    tags: [
+      { url: 'https://ads.example.com/vast1.xml' },
+      { url: 'https://ads.example.com/vast2.xml' },
+    ],
+    strategy: 'first-valid-media',
+    timeout: 5000,
+    autoplay: true,
+    muted: false,
+  });
+
+  player.on('statechange', function (e) {
+    console.log('State:', e.state);
+  });
+
+  player.on('adcomplete', function () {
+    console.log('Ad finished');
+  });
+
+  player.init();
+&lt;/script&gt;</code></pre>
+    </details>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

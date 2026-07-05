@@ -1,16 +1,15 @@
 import type { AnalyticsEvent, ClickHouseConfig } from './types.js'
 
-interface QueuedEvent {
-  event: AnalyticsEvent
-  resolve: () => void
-}
+const MAX_CONCURRENT_FLUSHES = 4
+const MAX_QUEUE_SIZE = 500_000
 
 export class ClickHouseBatcher {
   private client: import('@clickhouse/client').ClickHouseClient
-  private queue: QueuedEvent[] = []
+  private queue: AnalyticsEvent[] = []
   private flushTimer: ReturnType<typeof setInterval> | null = null
   private config: { maxSize: number; maxIntervalMs: number; database: string }
-  private flushing = false
+  private activeFlushes = 0
+  private droppedEvents = 0
 
   constructor(
     client: import('@clickhouse/client').ClickHouseClient,
@@ -30,38 +29,61 @@ export class ClickHouseBatcher {
       clearInterval(this.flushTimer)
       this.flushTimer = null
     }
-    await this.flush()
+    await this.drain()
   }
 
   push(event: AnalyticsEvent): void {
-    this.queue.push({
-      event,
-      resolve: () => {},
-    })
+    if (this.queue.length >= MAX_QUEUE_SIZE) {
+      this.droppedEvents++
+      if (this.droppedEvents % 1000 === 1) {
+        console.warn(`[batcher] queue full, dropped ${this.droppedEvents} events total`)
+      }
+      return
+    }
+
+    this.queue.push(event)
 
     if (this.queue.length >= this.config.maxSize) {
       this.flush()
     }
   }
 
-  private async flush(): Promise<void> {
-    if (this.flushing || this.queue.length === 0) return
-    this.flushing = true
+  getStats(): { queueSize: number; activeFlushes: number; droppedEvents: number } {
+    return {
+      queueSize: this.queue.length,
+      activeFlushes: this.activeFlushes,
+      droppedEvents: this.droppedEvents,
+    }
+  }
+
+  private flush(): void {
+    if (this.activeFlushes >= MAX_CONCURRENT_FLUSHES || this.queue.length === 0) return
+    this.activeFlushes++
 
     const batch = this.queue.splice(0, this.config.maxSize)
-    const rows = batch.map(q => q.event)
 
-    try {
-      await this.client.insert({
-        table: `\`${this.config.database}\`.ad_events`,
-        values: rows,
-        format: 'JSONEachRow',
-      })
-    } catch (err) {
-      console.error('[batcher] insert failed, re-queuing', (err as Error).message)
-      this.queue.unshift(...batch)
-    } finally {
-      this.flushing = false
+    this.client.insert({
+      table: `\`${this.config.database}\`.ad_events`,
+      values: batch,
+      format: 'JSONEachRow',
+    }).catch(err => {
+      console.error(`[batcher] insert failed (${batch.length} events), re-queuing`, (err as Error).message)
+      if (this.queue.length + batch.length <= MAX_QUEUE_SIZE) {
+        this.queue.unshift(...batch)
+      } else {
+        this.droppedEvents += batch.length
+      }
+    }).finally(() => {
+      this.activeFlushes--
+    })
+  }
+
+  private async drain(): Promise<void> {
+    while (this.queue.length > 0 || this.activeFlushes > 0) {
+      if (this.queue.length > 0 && this.activeFlushes < MAX_CONCURRENT_FLUSHES) {
+        this.flush()
+      }
+      await new Promise(r => setTimeout(r, 50))
     }
   }
 }

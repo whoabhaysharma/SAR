@@ -1,12 +1,12 @@
 export const CREATE_TABLE = `
 CREATE TABLE IF NOT EXISTS ad_events (
-  event       String,
-  publisher   String,
-  slot        String,
+  event       LowCardinality(String),
+  publisher   LowCardinality(String),
+  slot        LowCardinality(String),
   ts          UInt64,
   time        DateTime,
-  tag         String DEFAULT '',
-  error       String DEFAULT '',
+  tag         LowCardinality(String) DEFAULT '',
+  error       LowCardinality(String) DEFAULT '',
   quartile    UInt8 DEFAULT 0,
   duration    UInt32 DEFAULT 0,
   mediaCount  UInt8 DEFAULT 0,
@@ -17,8 +17,7 @@ CREATE TABLE IF NOT EXISTS ad_events (
   referer     String DEFAULT '',
   json        String DEFAULT ''
 ) ENGINE = MergeTree
-ORDER BY (publisher, time)
-TTL time + INTERVAL 90 DAY DELETE
+PARTITION BY toYYYYMM(time)
+ORDER BY (publisher, event, time)
+TTL time + INTERVAL 90 DAY DROP PARTITION
 `
-
-export const ADD_JSON_COLUMN = `ALTER TABLE IF EXISTS ad_events ADD COLUMN IF NOT EXISTS json String DEFAULT ''`

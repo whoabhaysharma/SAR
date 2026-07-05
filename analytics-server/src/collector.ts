@@ -6,6 +6,20 @@ const PIXEL_GIF = Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAA
 
 const KNOWN_FIELDS = new Set(['event', 'publisher', 'slot', 'ts', 'tag', 'error', 'quartile', 'duration', 'mediaCount', 'tagUrl', 'progress'])
 
+let cachedTime = ''
+let cachedTimeSec = 0
+
+function getNow(): string {
+  const sec = Math.floor(Date.now() / 1000)
+  if (sec === cachedTimeSec) return cachedTime
+
+  const d = new Date()
+  const pad = (n: number) => n < 10 ? '0' + n : '' + n
+  cachedTime = `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())}`
+  cachedTimeSec = sec
+  return cachedTime
+}
+
 interface CollectorOpts {
   batcher: ClickHouseBatcher
   clickHouse?: import('@clickhouse/client').ClickHouseClient
@@ -26,11 +40,15 @@ export async function collectorPlugin(app: FastifyInstance, opts: CollectorOpts)
     logLevel: 'error',
   }, async (req: FastifyRequest, reply: FastifyReply) => {
     const q = req.query as Record<string, string>
-    const now = new Date().toISOString().replace('T', ' ').slice(0, 19)
+    const now = getNow()
 
+    let hasJson = false
     const jsonPayload: Record<string, string> = {}
     for (const [k, v] of Object.entries(q)) {
-      if (!KNOWN_FIELDS.has(k)) jsonPayload[k] = v
+      if (!KNOWN_FIELDS.has(k)) {
+        jsonPayload[k] = v
+        hasJson = true
+      }
     }
 
     const event: AnalyticsEvent = {
@@ -49,7 +67,7 @@ export async function collectorPlugin(app: FastifyInstance, opts: CollectorOpts)
       ip: req.ip,
       userAgent: req.headers['user-agent'] || '',
       referer: req.headers['referer'] || '',
-      json: Object.keys(jsonPayload).length ? JSON.stringify(jsonPayload) : '',
+      json: hasJson ? JSON.stringify(jsonPayload) : '',
     }
 
     opts.batcher.push(event)
@@ -67,7 +85,8 @@ export async function collectorPlugin(app: FastifyInstance, opts: CollectorOpts)
     logLevel: 'error',
     preHandler: requireToken(opts),
   }, async (_req: FastifyRequest, _reply: FastifyReply) => {
-    return { ok: true, uptime: process.uptime() }
+    const stats = opts.batcher.getStats()
+    return { ok: true, uptime: process.uptime(), queue: stats.queueSize, flushes: stats.activeFlushes, dropped: stats.droppedEvents }
   })
 
   app.get('/recent', {

@@ -1,11 +1,13 @@
 import Fastify from 'fastify'
 import staticFiles from '@fastify/static'
 import { createClient } from '@clickhouse/client'
+import cluster from 'node:cluster'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { availableParallelism } from 'node:os'
 import { ClickHouseBatcher } from './batcher.js'
 import { collectorPlugin } from './collector.js'
-import { CREATE_TABLE, ADD_JSON_COLUMN } from './schema.js'
+import { CREATE_TABLE } from './schema.js'
 import type { ServerConfig } from './types.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -35,8 +37,7 @@ async function main(): Promise<void> {
 
   await clickHouse.command({ query: `CREATE DATABASE IF NOT EXISTS ${config.clickHouse.database}` })
   const tableName = `${config.clickHouse.database}.ad_events`
-  await clickHouse.command({ query: `CREATE TABLE IF NOT EXISTS ${tableName} (event String, publisher String, slot String, ts UInt64, time DateTime, tag String DEFAULT '', error String DEFAULT '', quartile UInt8 DEFAULT 0, duration UInt32 DEFAULT 0, mediaCount UInt8 DEFAULT 0, tagUrl String DEFAULT '', progress String DEFAULT '', ip String DEFAULT '', userAgent String DEFAULT '', referer String DEFAULT '', json String DEFAULT '') ENGINE = MergeTree ORDER BY (publisher, time) TTL time + INTERVAL 90 DAY DELETE` })
-  await clickHouse.command({ query: `ALTER TABLE ${tableName} ADD COLUMN IF NOT EXISTS json String DEFAULT ''` })
+  await clickHouse.command({ query: CREATE_TABLE.replace('ad_events', tableName) })
   await clickHouse.exec({ query: `USE ${config.clickHouse.database}` })
 
   const batcher = new ClickHouseBatcher(clickHouse, {
@@ -80,7 +81,19 @@ async function main(): Promise<void> {
   process.on('SIGINT', shutdown)
 }
 
-main().catch(err => {
-  console.error('[analytics] fatal:', err)
-  process.exit(1)
-})
+if (cluster.isPrimary && process.env.NO_CLUSTER !== '1') {
+  const cpus = availableParallelism()
+  console.log(`[analytics] primary ${process.pid} forking ${cpus} workers`)
+  for (let i = 0; i < cpus; i++) {
+    cluster.fork()
+  }
+  cluster.on('exit', (worker, code) => {
+    console.error(`[analytics] worker ${worker.process.pid} died (code ${code}), restarting`)
+    cluster.fork()
+  })
+} else {
+  main().catch(err => {
+    console.error('[analytics] fatal:', err)
+    process.exit(1)
+  })
+}

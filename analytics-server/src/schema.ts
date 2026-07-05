@@ -14,8 +14,11 @@ CREATE TABLE IF NOT EXISTS ad_events (
   progress    String DEFAULT '',
   ip          String DEFAULT '',
   userAgent   String DEFAULT '',
-  referer     String DEFAULT ''
+  referer     String DEFAULT '',
+  json        String DEFAULT ''
 ) ENGINE = MergeTree
 ORDER BY (publisher, time)
 TTL time + INTERVAL 90 DAY DELETE
 `
+
+export const ADD_JSON_COLUMN = `ALTER TABLE IF EXISTS ad_events ADD COLUMN IF NOT EXISTS json String DEFAULT ''`

@@ -14,6 +14,7 @@ export interface AnalyticsEvent {
   ip?: string
   userAgent?: string
   referer?: string
+  json?: string
 }
 
 export interface ClickHouseConfig {

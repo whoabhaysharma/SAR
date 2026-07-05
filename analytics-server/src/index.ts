@@ -5,7 +5,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { ClickHouseBatcher } from './batcher.js'
 import { collectorPlugin } from './collector.js'
-import { CREATE_TABLE } from './schema.js'
+import { CREATE_TABLE, ADD_JSON_COLUMN } from './schema.js'
 import type { ServerConfig } from './types.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -34,15 +34,9 @@ async function main(): Promise<void> {
   })
 
   await clickHouse.command({ query: `CREATE DATABASE IF NOT EXISTS ${config.clickHouse.database}` })
-  await clickHouse.command({
-    query: `CREATE TABLE IF NOT EXISTS ${config.clickHouse.database}.ad_events (
-      event String, publisher String, slot String, ts UInt64, time DateTime,
-      tag String DEFAULT '', error String DEFAULT '', quartile UInt8 DEFAULT 0,
-      duration UInt32 DEFAULT 0, mediaCount UInt8 DEFAULT 0, tagUrl String DEFAULT '',
-      progress String DEFAULT '', ip String DEFAULT '', userAgent String DEFAULT '',
-      referer String DEFAULT ''
-    ) ENGINE = MergeTree ORDER BY (publisher, time) TTL time + INTERVAL 90 DAY DELETE`,
-  })
+  const tableName = `${config.clickHouse.database}.ad_events`
+  await clickHouse.command({ query: `CREATE TABLE IF NOT EXISTS ${tableName} (event String, publisher String, slot String, ts UInt64, time DateTime, tag String DEFAULT '', error String DEFAULT '', quartile UInt8 DEFAULT 0, duration UInt32 DEFAULT 0, mediaCount UInt8 DEFAULT 0, tagUrl String DEFAULT '', progress String DEFAULT '', ip String DEFAULT '', userAgent String DEFAULT '', referer String DEFAULT '', json String DEFAULT '') ENGINE = MergeTree ORDER BY (publisher, time) TTL time + INTERVAL 90 DAY DELETE` })
+  await clickHouse.command({ query: `ALTER TABLE ${tableName} ADD COLUMN IF NOT EXISTS json String DEFAULT ''` })
   await clickHouse.exec({ query: `USE ${config.clickHouse.database}` })
 
   const batcher = new ClickHouseBatcher(clickHouse, {

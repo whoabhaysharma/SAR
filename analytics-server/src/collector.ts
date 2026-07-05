@@ -4,6 +4,8 @@ import type { ClickHouseBatcher } from './batcher.js'
 
 const PIXEL_GIF = Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', 'base64')
 
+const KNOWN_FIELDS = new Set(['event', 'publisher', 'slot', 'ts', 'tag', 'error', 'quartile', 'duration', 'mediaCount', 'tagUrl', 'progress'])
+
 interface CollectorOpts {
   batcher: ClickHouseBatcher
   clickHouse?: import('@clickhouse/client').ClickHouseClient
@@ -13,27 +15,14 @@ interface CollectorOpts {
 export async function collectorPlugin(app: FastifyInstance, opts: CollectorOpts): Promise<void> {
   app.get('/collect', {
     logLevel: 'error',
-    schema: {
-      querystring: {
-        type: 'object',
-        properties: {
-          event: { type: 'string' },
-          publisher: { type: 'string' },
-          slot: { type: 'string' },
-          ts: { type: 'string' },
-          tag: { type: 'string' },
-          error: { type: 'string' },
-          quartile: { type: 'string' },
-          duration: { type: 'string' },
-          mediaCount: { type: 'string' },
-          tagUrl: { type: 'string' },
-          progress: { type: 'string' },
-        },
-      },
-    },
   }, async (req: FastifyRequest, reply: FastifyReply) => {
     const q = req.query as Record<string, string>
     const now = new Date().toISOString().replace('T', ' ').slice(0, 19)
+
+    const jsonPayload: Record<string, string> = {}
+    for (const [k, v] of Object.entries(q)) {
+      if (!KNOWN_FIELDS.has(k)) jsonPayload[k] = v
+    }
 
     const event: AnalyticsEvent = {
       event: q.event || 'unknown',
@@ -51,6 +40,7 @@ export async function collectorPlugin(app: FastifyInstance, opts: CollectorOpts)
       ip: req.ip,
       userAgent: req.headers['user-agent'] || '',
       referer: req.headers['referer'] || '',
+      json: Object.keys(jsonPayload).length ? JSON.stringify(jsonPayload) : '',
     }
 
     opts.batcher.push(event)

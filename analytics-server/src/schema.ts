@@ -19,5 +19,5 @@ CREATE TABLE IF NOT EXISTS ad_events (
 ) ENGINE = MergeTree
 PARTITION BY toYYYYMM(time)
 ORDER BY (publisher, event, time)
-TTL time + INTERVAL 90 DAY DROP PARTITION
+TTL time + INTERVAL 90 DAY DELETE
 `

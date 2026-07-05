@@ -1,10 +1,8 @@
 import Fastify from 'fastify'
 import staticFiles from '@fastify/static'
 import { createClient } from '@clickhouse/client'
-import cluster from 'node:cluster'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { availableParallelism } from 'node:os'
 import { ClickHouseBatcher } from './batcher.js'
 import { collectorPlugin } from './collector.js'
 import { CREATE_TABLE } from './schema.js'
@@ -81,19 +79,7 @@ async function main(): Promise<void> {
   process.on('SIGINT', shutdown)
 }
 
-if (cluster.isPrimary && process.env.NO_CLUSTER !== '1') {
-  const cpus = availableParallelism()
-  console.log(`[analytics] primary ${process.pid} forking ${cpus} workers`)
-  for (let i = 0; i < cpus; i++) {
-    cluster.fork()
-  }
-  cluster.on('exit', (worker, code) => {
-    console.error(`[analytics] worker ${worker.process.pid} died (code ${code}), restarting`)
-    cluster.fork()
-  })
-} else {
-  main().catch(err => {
-    console.error('[analytics] fatal:', err)
-    process.exit(1)
-  })
-}
+main().catch(err => {
+  console.error('[analytics] fatal:', err)
+  process.exit(1)
+})

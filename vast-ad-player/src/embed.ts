@@ -3,12 +3,14 @@ import { VastVideoRenderer } from './vast/renderer'
 import { HtmlRenderer } from './plugins/html'
 import { ScriptRenderer } from './plugins/script'
 import { ViewportPlugin } from './plugins/viewport'
+import { AnalyticsPlugin } from './plugins/analytics'
 
 export { PlayerCore } from './core/player-core'
 export { VastVideoRenderer } from './vast/renderer'
 export { HtmlRenderer } from './plugins/html'
 export { ScriptRenderer } from './plugins/script'
 export { ViewportPlugin } from './plugins/viewport'
+export { AnalyticsPlugin } from './plugins/analytics'
 export { VastAdPlayer } from './player/ad-player'
 
 export type * from './core/types'
@@ -16,6 +18,7 @@ export type { VastVideoConfig } from './vast/renderer'
 export type { ViewportPluginConfig } from './plugins/viewport'
 export type { HtmlAdConfig } from './plugins/html'
 export type { ScriptAdConfig } from './plugins/script'
+export type { AnalyticsPluginConfig } from './plugins/analytics'
 
 /* ── auto-init ── */
 
@@ -74,6 +77,15 @@ function initEmbed(): void {
       if (cfg.viewport) {
         const vp = new ViewportPlugin(core, cfg.viewport)
         vp.init()
+      }
+
+      if (cfg.analytics) {
+        const analytics = new AnalyticsPlugin(core, {
+          endpoint: cfg.analytics.endpoint,
+          context: { publisher, slot },
+          tag: cfg.tag,
+        })
+        analytics.init()
       }
 
       const rendererType: RendererType = cfg.renderer?.type || 'vast-video'

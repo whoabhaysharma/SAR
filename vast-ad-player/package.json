@@ -46,6 +46,14 @@
     "./plugins/script": {
       "types": "./src/plugins/script.ts",
       "import": "./src/plugins/script.ts"
+    },
+    "./plugins/analytics": {
+      "types": "./src/plugins/analytics.ts",
+      "import": "./src/plugins/analytics.ts"
+    },
+    "./analytics": {
+      "types": "./src/analytics/index.ts",
+      "import": "./src/analytics/index.ts"
     }
   },
   "scripts": {

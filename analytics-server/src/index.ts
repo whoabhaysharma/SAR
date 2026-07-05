@@ -46,11 +46,11 @@ async function main(): Promise<void> {
   })
   batcher.start()
 
+  const isDev = process.env.NODE_ENV !== 'production'
   const app = Fastify({
-    logger: {
-      level: 'warn',
-      transport: { target: 'pino-pretty', options: { colorize: true, translateTime: 'HH:MM:ss' } },
-    },
+    logger: isDev
+      ? { level: 'warn', transport: { target: 'pino-pretty', options: { colorize: true, translateTime: 'HH:MM:ss' } } }
+      : { level: 'warn' },
   })
 
   await app.register(staticFiles, {

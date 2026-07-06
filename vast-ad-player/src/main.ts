@@ -1,4 +1,4 @@
-import { VastAdPlayer, ViewportPlugin } from './index'
+import { VastAdPlayer, ViewportPlugin, AnalyticsPlugin } from './index'
 import type { PlayerState } from './core/types'
 import '../style.css'
 
@@ -17,6 +17,7 @@ const viewportEl = document.getElementById('viewport') as HTMLInputElement
 
 let player: VastAdPlayer | null = null
 let viewportPlugin: ViewportPlugin | null = null
+let analyticsPlugin: AnalyticsPlugin | null = null
 
 function getTags() {
   return tagsEl.value.split('\n').map(s => s.trim()).filter(Boolean)
@@ -71,6 +72,13 @@ function loadPlayer() {
   player.on('adcomplete', () => writeLog('Ad complete'))
   player.on('aderror', ({ error }: any) => writeLog(`Error: ${error}`))
 
+  analyticsPlugin = new AnalyticsPlugin(player.playerCore, {
+    endpoint: 'https://analytics.bythub.in',
+    context: { publisher: 'vast-ad-player-demo', slot: 'main-demo', tag: 'dev-testing' },
+  })
+  analyticsPlugin.init()
+  writeLog('📊 Analytics active → analytics.bythub.in')
+
   if (viewportEl.checked) {
     viewportPlugin = new ViewportPlugin(player.playerCore, {
       threshold: 0,
@@ -94,6 +102,8 @@ document.getElementById('pause-btn')!.addEventListener('click', () => player?.pa
 document.getElementById('destroy-btn')!.addEventListener('click', () => {
   viewportPlugin?.destroy()
   viewportPlugin = null
+  analyticsPlugin?.destroy()
+  analyticsPlugin = null
   player?.destroy()
   player = null
   statusEl.textContent = 'State: IDLE'

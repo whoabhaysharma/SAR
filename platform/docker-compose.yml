@@ -1,0 +1,27 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  api:
+    build: ./backend
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: "4000"
+      MONGO_URI: "mongodb://mongo:27017/analytics-platform"
+      JWT_SECRET: "change-me-in-production"
+      CLICKHOUSE_HOST: "http://clickhouse:8123"
+      CLICKHOUSE_USER: "analytics"
+      CLICKHOUSE_PASSWORD: "analytics123"
+      CLICKHOUSE_DB: "analytics"
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data:

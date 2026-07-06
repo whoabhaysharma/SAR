@@ -17,40 +17,24 @@ services:
       retries: 10
       start_period: 10s
 
-  nats:
-    image: nats:2-alpine
-    restart: unless-stopped
-    command: ["--jetstream", "--store_dir", "/data"]
-    ports:
-      - "4222:4222"
-      - "8222:8222"
-    volumes:
-      - nats_data:/data
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:8222/healthz"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
-
   analytics-server:
     build: .
     restart: unless-stopped
     ports:
       - "8080:8080"
     environment:
-      SERVICE_MODE: "server"
       PORT: "8080"
-      NATS_URL: "nats://nats:4222"
       CLICKHOUSE_HOST: "http://clickhouse:8123"
       CLICKHOUSE_NATIVE_HOST: "clickhouse:9000"
       CLICKHOUSE_USER: analytics
       CLICKHOUSE_PASSWORD: analytics123
       CLICKHOUSE_DB: analytics
       ADMIN_TOKEN: "admin-secret-token"
+      FLUSH_WORKERS: "12"
+      BATCH_MAX_SIZE: "5000"
+      BATCH_INTERVAL_MS: "1000"
     depends_on:
       clickhouse:
-        condition: service_healthy
-      nats:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:8080/health?token=admin-secret-token"]
@@ -59,26 +43,5 @@ services:
       retries: 5
       start_period: 5s
 
-  analytics-writer:
-    build: .
-    restart: unless-stopped
-    environment:
-      SERVICE_MODE: "writer"
-      NATS_URL: "nats://nats:4222"
-      CLICKHOUSE_HOST: "http://clickhouse:8123"
-      CLICKHOUSE_NATIVE_HOST: "clickhouse:9000"
-      CLICKHOUSE_USER: analytics
-      CLICKHOUSE_PASSWORD: analytics123
-      CLICKHOUSE_DB: analytics
-      BATCH_MAX_SIZE: "1000"
-      BATCH_INTERVAL_MS: "5000"
-      MAX_RETRIES: "5"
-    depends_on:
-      clickhouse:
-        condition: service_healthy
-      nats:
-        condition: service_healthy
-
 volumes:
   clickhouse_data:
-  nats_data:

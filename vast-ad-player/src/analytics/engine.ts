@@ -1,10 +1,12 @@
+import type { AnalyticsHandler } from './types'
+
 export interface AnalyticsEngineConfig {
   endpoint: string
   context?: Record<string, string>
   tag?: string
 }
 
-export class AnalyticsEngine {
+export class AnalyticsEngine implements AnalyticsHandler {
   private config: Required<AnalyticsEngineConfig>
   private _destroyed = false
 

@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"sync/atomic"
 	"time"
 
@@ -57,10 +58,16 @@ func handleRecent(ctx *fasthttp.RequestCtx, cfg Config, ch *chClient) {
 		ctx.SetBody([]byte(`{"error":"Unauthorized"}`))
 		return
 	}
+	limit := 50
+	if l := ctx.QueryArgs().Peek("limit"); len(l) > 0 {
+		if v, err := strconv.Atoi(string(l)); err == nil && v > 0 && v <= 1000 {
+			limit = v
+		}
+	}
 	ctx.SetContentType("application/json")
 	result, err := ch.query(fmt.Sprintf(
-		`SELECT event, publisher, slot, time FROM %s.ad_events ORDER BY time DESC LIMIT 50 FORMAT JSONEachRow`,
-		cfg.ClickHouseDB))
+		`SELECT event, publisher, slot, time, ts, quartile, duration, tag, error, progress, tagUrl, json FROM %s.ad_events ORDER BY time DESC LIMIT %d FORMAT JSON`,
+		cfg.ClickHouseDB, limit))
 	if err != nil {
 		ctx.SetBody([]byte("[]"))
 		return

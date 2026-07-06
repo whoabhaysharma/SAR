@@ -107,6 +107,8 @@ func main() {
 			handleHealth(ctx, cfg, &received, &flushed, &dropped, raw)
 		case "/recent":
 			handleRecent(ctx, cfg, ch)
+		case "/events":
+			handleRecent(ctx, cfg, ch)
 		default:
 			if fsHandler != nil {
 				fsHandler(ctx)

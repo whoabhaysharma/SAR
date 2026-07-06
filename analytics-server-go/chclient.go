@@ -73,9 +73,16 @@ func (c *chClient) query(query string) ([]map[string]interface{}, error) {
 		return nil, err
 	}
 	defer resp.Body.Close()
-	var result []map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+	var raw map[string]interface{}
+	if err := json.NewDecoder(resp.Body).Decode(&raw); err != nil {
 		return nil, err
+	}
+	data, _ := raw["data"].([]interface{})
+	result := make([]map[string]interface{}, 0, len(data))
+	for _, row := range data {
+		if m, ok := row.(map[string]interface{}); ok {
+			result = append(result, m)
+		}
 	}
 	return result, nil
 }

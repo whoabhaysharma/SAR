@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Dashboard</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; padding: 20px; }
+  h1 { font-size: 20px; margin-bottom: 16px; color: #58a6ff; display: flex; align-items: center; gap: 12px; }
+  .stats { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+  .stat { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 12px 20px; min-width: 140px; }
+  .stat .label { font-size: 11px; text-transform: uppercase; color: #8b949e; letter-spacing: .5px; }
+  .stat .value { font-size: 22px; font-weight: 600; color: #f0f6fc; margin-top: 4px; }
+  .controls { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+  .controls input, .controls select { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 10px; border-radius: 4px; font-size: 13px; }
+  .controls button { background: #238636; border: none; color: #fff; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; }
+  .controls button:hover { background: #2ea043; }
+  .controls label { font-size: 13px; color: #8b949e; display: flex; align-items: center; gap: 6px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: #161b22; border: 1px solid #30363d; border-radius: 6px; overflow: hidden; }
+  th { background: #21262d; color: #8b949e; font-weight: 600; text-align: left; padding: 8px 10px; border-bottom: 1px solid #30363d; white-space: nowrap; cursor: pointer; user-select: none; position: sticky; top: 0; }
+  th:hover { color: #f0f6fc; }
+  td { padding: 6px 10px; border-bottom: 1px solid #21262d; white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis; }
+  tr:hover td { background: #1c2128; }
+  .event-impression { color: #58a6ff; }
+  .event-start { color: #3fb950; }
+  .event-quartile { color: #d29922; }
+  .event-complete { color: #f78166; }
+  .event-error { color: #f85149; }
+  .event-adloaded { color: #bc8cff; }
+  .loading { text-align: center; padding: 40px; color: #8b949e; }
+  .error-msg { color: #f85149; padding: 20px; text-align: center; }
+  .auto-refresh { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8b949e; }
+  .auto-refresh .dot { width: 8px; height: 8px; border-radius: 50%; background: #238636; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+  .table-wrap { max-height: 70vh; overflow-y: auto; border-radius: 6px; border: 1px solid #30363d; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: #0d1117; }
+  ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<h1>📊 Analytics Events</h1>
+
+<div class="stats" id="stats">
+  <div class="stat"><div class="label">Events</div><div class="value" id="total-events">-</div></div>
+  <div class="stat"><div class="label">Last Event</div><div class="value" id="last-event">-</div></div>
+  <div class="stat"><div class="label">Unique Publishers</div><div class="value" id="unique-publishers">-</div></div>
+</div>
+
+<div class="controls">
+  <label>Limit <select id="limit-select"><option value="50">50</option><option value="100">100</option><option value="200">200</option><option value="500" selected>500</option><option value="1000">1000</option></select></label>
+  <label>Filter event <input id="filter-event" placeholder="e.g. start, quartile" style="width:140px"></label>
+  <label>Filter publisher <input id="filter-publisher" placeholder="publisher name" style="width:140px"></label>
+  <button id="refresh-btn">🔄 Refresh</button>
+  <div class="auto-refresh"><span class="dot"></span> Auto-refresh every 10s</div>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead><tr>
+      <th data-key="time">Time</th>
+      <th data-key="event">Event</th>
+      <th data-key="publisher">Publisher</th>
+      <th data-key="slot">Slot</th>
+      <th data-key="tag">Tag</th>
+      <th data-key="quartile">Q</th>
+      <th data-key="duration">Dur</th>
+      <th data-key="error">Error</th>
+      <th data-key="progress">Progress</th>
+      <th data-key="tagUrl">Tag URL</th>
+    </tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<script>
+const TOKEN = new URLSearchParams(location.search).get('token') || 'admin-secret-token'
+const API = `/events?token=${TOKEN}`
+
+let sortKey = 'time'
+let sortDir = -1
+let timer = null
+
+async function load() {
+  const limit = document.getElementById('limit-select').value
+  const filterEvent = document.getElementById('filter-event').value.toLowerCase()
+  const filterPub = document.getElementById('filter-publisher').value.toLowerCase()
+
+  try {
+    const res = await fetch(`${API}&limit=${limit}`)
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const data = await res.json()
+    render(data, filterEvent, filterPub)
+  } catch (err) {
+    document.getElementById('tbody').innerHTML = `<tr><td colspan="10" class="error-msg">Failed to load: ${err.message}</td></tr>`
+  }
+}
+
+function render(data, filterEvent, filterPub) {
+  let filtered = data
+  if (filterEvent) filtered = filtered.filter(r => (r.event || '').toLowerCase().includes(filterEvent))
+  if (filterPub) filtered = filtered.filter(r => (r.publisher || '').toLowerCase().includes(filterPub))
+
+  // sort
+  filtered.sort((a, b) => {
+    const va = a[sortKey] ?? ''
+    const vb = b[sortKey] ?? ''
+    if (typeof va === 'string') return sortDir * va.localeCompare(vb)
+    return sortDir * (va - vb)
+  })
+
+  const tbody = document.getElementById('tbody')
+  tbody.innerHTML = filtered.map(r => {
+    const cls = `event-${r.event || ''}`.toLowerCase()
+    const quartile = r.quartile != null ? (r.quartile + '/4') : '-'
+    const duration = r.duration ? r.duration + 's' : '-'
+    const time = r.time ? new Date(r.time).toLocaleString() : '-'
+    return `<tr>
+      <td title="${time}">${time}</td>
+      <td class="${cls}">${r.event || '-'}</td>
+      <td>${r.publisher || '-'}</td>
+      <td>${r.slot || '-'}</td>
+      <td>${r.tag || '-'}</td>
+      <td>${quartile}</td>
+      <td>${duration}</td>
+      <td style="color:#f85149">${r.error || '-'}</td>
+      <td>${r.progress || '-'}</td>
+      <td title="${r.tagUrl || ''}">${(r.tagUrl || '-').slice(0, 50)}</td>
+    </tr>`
+  }).join('')
+
+  // stats
+  document.getElementById('total-events').textContent = data.length.toLocaleString()
+  if (data.length > 0) {
+    document.getElementById('last-event').textContent = data[0].time ? new Date(data[0].time).toLocaleString() : '-'
+  }
+  const pubs = new Set(data.map(r => r.publisher).filter(Boolean))
+  document.getElementById('unique-publishers').textContent = pubs.size
+}
+
+// sort on th click
+document.querySelectorAll('th').forEach(th => {
+  th.addEventListener('click', () => {
+    const key = th.dataset.key
+    if (key === sortKey) sortDir *= -1
+    else { sortKey = key; sortDir = 1 }
+    load()
+  })
+})
+
+document.getElementById('refresh-btn').addEventListener('click', load)
+document.getElementById('limit-select').addEventListener('change', load)
+document.getElementById('filter-event').addEventListener('input', load)
+document.getElementById('filter-publisher').addEventListener('input', load)
+
+load()
+timer = setInterval(load, 10000)
+</script>
+</body>
+</html>

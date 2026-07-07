@@ -116,10 +116,11 @@ func insertBatch(conn clickhouse.Conn, db string, events []AnalyticsEvent) error
 	if err != nil {
 		return err
 	}
+	now := time.Now()
 	for i := range events {
 		ev := &events[i]
 		if err := batch.Append(
-			ev.Event, ev.Publisher, ev.Slot, ev.Ts, ev.Timestamp,
+			ev.Event, ev.Publisher, ev.Slot, ev.Ts, now,
 			ev.Tag, ev.ErrMsg, ev.Quartile, ev.Duration, ev.MediaCount,
 			ev.TagUrl, ev.Progress, "", "", "", "",
 		); err != nil {

@@ -158,7 +158,11 @@ func parseQueryBytes(q []byte) AnalyticsEvent {
 
 		switch tail[0] {
 		case 'e':
-			if keyEnd == 5 && tail[1] == 'v' && tail[2] == 'e' && tail[3] == 'n' && tail[4] == 't' {
+			if keyEnd == 1 {
+				if eq >= 0 {
+					ev.Event = string(tail[eq+1 : end])
+				}
+			} else if keyEnd == 5 && tail[1] == 'v' && tail[2] == 'e' && tail[3] == 'n' && tail[4] == 't' {
 				if eq >= 0 {
 					ev.Event = string(tail[eq+1 : end])
 				}
@@ -168,7 +172,11 @@ func parseQueryBytes(q []byte) AnalyticsEvent {
 				}
 			}
 		case 'p':
-			if keyEnd == 9 && tail[1] == 'u' && tail[2] == 'b' && tail[3] == 'l' && tail[4] == 'i' && tail[5] == 's' && tail[6] == 'h' && tail[7] == 'e' && tail[8] == 'r' {
+			if keyEnd == 1 {
+				if eq >= 0 {
+					ev.Publisher = string(tail[eq+1 : end])
+				}
+			} else if keyEnd == 9 && tail[1] == 'u' && tail[2] == 'b' && tail[3] == 'l' && tail[4] == 'i' && tail[5] == 's' && tail[6] == 'h' && tail[7] == 'e' && tail[8] == 'r' {
 				if eq >= 0 {
 					ev.Publisher = string(tail[eq+1 : end])
 				}
@@ -178,13 +186,21 @@ func parseQueryBytes(q []byte) AnalyticsEvent {
 				}
 			}
 		case 's':
-			if keyEnd == 4 && tail[1] == 'l' && tail[2] == 'o' && tail[3] == 't' {
+			if keyEnd == 1 {
+				if eq >= 0 {
+					ev.Slot = string(tail[eq+1 : end])
+				}
+			} else if keyEnd == 4 && tail[1] == 'l' && tail[2] == 'o' && tail[3] == 't' {
 				if eq >= 0 {
 					ev.Slot = string(tail[eq+1 : end])
 				}
 			}
 		case 't':
-			if keyEnd == 2 && tail[1] == 's' {
+			if keyEnd == 1 {
+				if eq >= 0 {
+					ev.Tag = string(tail[eq+1 : end])
+				}
+			} else if keyEnd == 2 && tail[1] == 's' {
 				if eq >= 0 && end > eq+1 {
 					if v, ok := bytesToUint64(tail[eq+1 : end]); ok && v > 0 {
 						ev.Ts = v
@@ -202,7 +218,13 @@ func parseQueryBytes(q []byte) AnalyticsEvent {
 				}
 			}
 		case 'q':
-			if keyEnd == 8 && tail[1] == 'u' && tail[2] == 'a' && tail[3] == 'r' && tail[4] == 't' && tail[5] == 'i' && tail[6] == 'l' && tail[7] == 'e' {
+			if keyEnd == 1 {
+				if eq >= 0 && end > eq+1 {
+					if v, ok := bytesToUint64(tail[eq+1 : end]); ok {
+						ev.Quartile = uint8(v)
+					}
+				}
+			} else if keyEnd == 8 && tail[1] == 'u' && tail[2] == 'a' && tail[3] == 'r' && tail[4] == 't' && tail[5] == 'i' && tail[6] == 'l' && tail[7] == 'e' {
 				if eq >= 0 && end > eq+1 {
 					if v, ok := bytesToUint64(tail[eq+1 : end]); ok {
 						ev.Quartile = uint8(v)
@@ -210,7 +232,13 @@ func parseQueryBytes(q []byte) AnalyticsEvent {
 				}
 			}
 		case 'd':
-			if keyEnd == 8 && tail[1] == 'u' && tail[2] == 'r' && tail[3] == 'a' && tail[4] == 't' && tail[5] == 'i' && tail[6] == 'o' && tail[7] == 'n' {
+			if keyEnd == 1 {
+				if eq >= 0 && end > eq+1 {
+					if v, ok := bytesToUint64(tail[eq+1 : end]); ok {
+						ev.Duration = uint32(v)
+					}
+				}
+			} else if keyEnd == 8 && tail[1] == 'u' && tail[2] == 'r' && tail[3] == 'a' && tail[4] == 't' && tail[5] == 'i' && tail[6] == 'o' && tail[7] == 'n' {
 				if eq >= 0 && end > eq+1 {
 					if v, ok := bytesToUint64(tail[eq+1 : end]); ok {
 						ev.Duration = uint32(v)
@@ -218,7 +246,13 @@ func parseQueryBytes(q []byte) AnalyticsEvent {
 				}
 			}
 		case 'm':
-			if keyEnd == 10 && tail[1] == 'e' && tail[2] == 'd' && tail[3] == 'i' && tail[4] == 'a' && tail[5] == 'C' && tail[6] == 'o' && tail[7] == 'u' && tail[8] == 'n' && tail[9] == 't' {
+			if keyEnd == 1 {
+				if eq >= 0 && end > eq+1 {
+					if v, ok := bytesToUint64(tail[eq+1 : end]); ok {
+						ev.MediaCount = uint8(v)
+					}
+				}
+			} else if keyEnd == 10 && tail[1] == 'e' && tail[2] == 'd' && tail[3] == 'i' && tail[4] == 'a' && tail[5] == 'C' && tail[6] == 'o' && tail[7] == 'u' && tail[8] == 'n' && tail[9] == 't' {
 				if eq >= 0 && end > eq+1 {
 					if v, ok := bytesToUint64(tail[eq+1 : end]); ok {
 						ev.MediaCount = uint8(v)

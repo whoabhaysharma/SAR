@@ -48,7 +48,8 @@ router.post('/', async (req, res) => {
     publisherTag,
   })
 
-  res.status(201).json(campaign)
+  const configUrl = `${req.protocol}://${req.get('host')}/api/config/${publisherTag}`
+  res.status(201).json({ ...campaign.toObject(), configUrl })
 })
 
 router.get('/:id', async (req, res) => {

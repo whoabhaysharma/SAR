@@ -106,7 +106,7 @@
 </footer>
 
 <script type="module">
-  import { VastAdPlayer, AnalyticsPlugin, ViewportPlugin } from '../dist/vast-ad-player.js'
+  import { BunnyTag, AnalyticsPlugin, ViewportPlugin } from '../dist/adbunny.js'
 
   const logEl = document.getElementById('ad-log')
   const playBtn = document.getElementById('ad-play')
@@ -138,7 +138,7 @@
     pauseBtn.disabled = true
     log('🎬 Initializing player…')
 
-    player = new VastAdPlayer({
+    player = new BunnyTag({
       container: '#ad-slot',
       tags: [
         { url: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_ad_samples&sz=640x480&cust_params=sample_ct%3Dlinear&ciu_szs=300x250%2C728x90&gdfp_req=1&output=vast&unpositioned_start=1&env=vp&impl=s&correlator=' },
@@ -152,7 +152,7 @@
 
     // ── Analytics ──
     analytics = new AnalyticsPlugin(player.playerCore, {
-      endpoint: 'https://analytics.bythub.in',
+      endpoint: 'https://go.adbunny.in',
       context: {
         publisher: 'techpulse-blog',
         slot: 'in-article-1',
@@ -160,7 +160,7 @@
       },
     })
     analytics.init()
-    log('📊 Analytics active → analytics.bythub.in')
+    log('📊 Analytics active → go.adbunny.in')
 
     // ── Viewport (pause when scrolled away) ──
     viewport = new ViewportPlugin(player.playerCore, {

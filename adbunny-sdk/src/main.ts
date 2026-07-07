@@ -1,4 +1,4 @@
-import { VastAdPlayer, ViewportPlugin, AnalyticsPlugin } from './index'
+import { BunnyTag, ViewportPlugin, AnalyticsPlugin } from './index'
 import type { PlayerState } from './core/types'
 import '../style.css'
 
@@ -15,7 +15,7 @@ const mutedEl = document.getElementById('muted') as HTMLInputElement
 const autoplayEl = document.getElementById('autoplay') as HTMLInputElement
 const viewportEl = document.getElementById('viewport') as HTMLInputElement
 
-let player: VastAdPlayer | null = null
+let player: BunnyTag | null = null
 let viewportPlugin: ViewportPlugin | null = null
 let analyticsPlugin: AnalyticsPlugin | null = null
 
@@ -48,7 +48,7 @@ function loadPlayer() {
     return
   }
 
-  player = new VastAdPlayer({
+  player = new BunnyTag({
     container: '#ad-container',
     tags,
     strategy: strategyEl.value as any,
@@ -73,11 +73,11 @@ function loadPlayer() {
   player.on('aderror', ({ error }: any) => writeLog(`Error: ${error}`))
 
   analyticsPlugin = new AnalyticsPlugin(player.playerCore, {
-    endpoint: 'https://analytics.bythub.in',
-    context: { publisher: 'vast-ad-player-demo', slot: 'main-demo', tag: 'dev-testing' },
+    endpoint: 'https://go.adbunny.in',
+    context: { publisher: 'adbunny-demo', slot: 'main-demo', tag: 'dev-testing' },
   })
   analyticsPlugin.init()
-  writeLog('📊 Analytics active → analytics.bythub.in')
+  writeLog('📊 Analytics active → go.adbunny.in')
 
   if (viewportEl.checked) {
     viewportPlugin = new ViewportPlugin(player.playerCore, {

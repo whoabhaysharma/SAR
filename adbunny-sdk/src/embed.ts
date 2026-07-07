@@ -11,7 +11,7 @@ export { HtmlRenderer } from './plugins/html'
 export { ScriptRenderer } from './plugins/script'
 export { ViewportPlugin } from './plugins/viewport'
 export { AnalyticsPlugin } from './plugins/analytics'
-export { VastAdPlayer } from './player/ad-player'
+export { BunnyTag } from './player/ad-player'
 
 export type * from './core/types'
 export type { VastVideoConfig } from './vast/renderer'
@@ -31,20 +31,19 @@ function initEmbed(): void {
   const apiBase = script.getAttribute('data-api') || ''
   const publisher = script.getAttribute('data-publisher')
   if (!publisher) {
-    console.warn('[vast-ad-player] missing data-publisher on script tag')
+    console.warn('[AdBunny] missing data-publisher on script tag')
     return
   }
 
   const targetSel = script.getAttribute('data-target')
   if (!targetSel) {
-    console.warn('[vast-ad-player] missing data-target on script tag')
+    console.warn('[AdBunny] missing data-target on script tag')
     return
   }
 
   const slot = script.getAttribute('data-slot') || 'default'
 
-  const params = new URLSearchParams({ p: publisher, slot })
-  const configUrl = apiBase ? `${apiBase}/v1/config?${params}` : `./v1/config?${params}`
+  const configUrl = apiBase ? `${apiBase}/config/${publisher}.json` : `./config/${publisher}.json`
 
   const fallback = script.getAttribute('data-fallback') || 'create'
 

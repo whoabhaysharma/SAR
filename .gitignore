@@ -1,0 +1,16 @@
+# Secrets
+*.pem
+*.key
+.env
+.env.*
+
+# Node
+node_modules/
+dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker volumes
+clickhouse_data/

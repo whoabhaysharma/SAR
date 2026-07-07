@@ -1,5 +1,5 @@
 export { PlayerCore } from './core/player-core'
-export { VastAdPlayer } from './player/ad-player'
+export { BunnyTag } from './player/ad-player'
 export { VastVideoRenderer } from './vast/renderer'
 export { ViewportPlugin, HtmlRenderer, ScriptRenderer, AnalyticsPlugin } from './plugins'
 export { AnalyticsEngine } from './analytics/engine'

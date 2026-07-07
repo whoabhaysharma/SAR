@@ -1,15 +1,15 @@
 {
-  "name": "vast-ad-player",
+  "name": "@adbunny/sdk",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "main": "./dist/vast-ad-player.js",
+  "main": "./dist/adbunny.js",
   "types": "./src/index.ts",
   "exports": {
     ".": {
       "types": "./src/index.ts",
-      "import": "./dist/vast-ad-player.js",
-      "require": "./dist/vast-ad-player.umd.cjs"
+      "import": "./dist/adbunny.js",
+      "require": "./dist/adbunny.umd.cjs"
     },
     "./core": {
       "types": "./src/core/index.ts",

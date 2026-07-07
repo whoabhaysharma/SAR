@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VAST Ad Player Demo</title>
+  <title>AdBunny SDK Demo</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="app">
-    <h1>VAST Ad Player</h1>
+    <h1>AdBunny SDK</h1>
 
     <div class="layout">
       <div class="player-section">
@@ -52,11 +52,11 @@
 
     <details class="embed-guide">
       <summary>Publisher Embed Guide</summary>
-      <p>Serve <code>dist/vast-ad-player.umd.cjs</code> from your CDN, then publishers add:</p>
+      <p>Serve <code>dist/adbunny.umd.cjs</code> from your CDN, then publishers add:</p>
 <pre><code>&lt;div id="ad-container" style="width:640px;height:360px"&gt;&lt;/div&gt;
-&lt;script src="https://your-cdn.com/vast-ad-player.umd.cjs"&gt;&lt;/script&gt;
+&lt;script src="https://cdn.adbunny.in/adbunny.js"&gt;&lt;/script&gt;
 &lt;script&gt;
-  var player = new VastAdPlayer({
+  var tag = new BunnyTag({
     container: '#ad-container',
     tags: [
       { url: 'https://ads.example.com/vast1.xml' },
@@ -68,15 +68,15 @@
     muted: false,
   });
 
-  player.on('statechange', function (e) {
+  tag.on('statechange', function (e) {
     console.log('State:', e.state);
   });
 
-  player.on('adcomplete', function () {
-    console.log('Ad finished');
+  tag.on('adcomplete', function () {
+    console.log('Ad completed');
   });
 
-  player.init();
+  tag.init();
 &lt;/script&gt;</code></pre>
     </details>
   </div>

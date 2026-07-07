@@ -9,7 +9,7 @@ import type { VastVideoConfig } from '../vast/renderer'
 import { ViewportPlugin } from '../plugins/viewport'
 import type { ViewportPluginConfig } from '../plugins/viewport'
 
-export class VastAdPlayer {
+export class BunnyTag {
   private core: PlayerCore
   private renderer: VastVideoRenderer
   private viewportPlugin: ViewportPlugin | null = null

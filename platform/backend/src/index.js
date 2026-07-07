@@ -8,6 +8,7 @@ import orgRoutes from './routes/orgs.js'
 import userRoutes from './routes/users.js'
 import campaignRoutes from './routes/campaigns.js'
 import analyticsRoutes from './routes/analytics.js'
+import configRoutes from './routes/config.js'
 
 const app = express()
 const PORT = process.env.PORT || 4000
@@ -20,6 +21,7 @@ app.use('/api/orgs', orgRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/campaigns', campaignRoutes)
 app.use('/api/analytics', analyticsRoutes)
+app.use('/api/config', configRoutes)
 
 app.post('/api/setup', async (req, res) => {
   const existing = await User.countDocuments({ role: 'super_admin' })

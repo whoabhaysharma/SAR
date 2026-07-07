@@ -23,22 +23,38 @@ export default function NewCampaign() {
   }
 
   if (created) {
-    const embed = `<div id="ad-container" style="width:640px;height:360px"></div>
-<script src="vast-ad-player.js"><\/script>
-<script>
-  const player = new VastAdPlayer({ container: '#ad-container', tags: [{ url: '${vastTagUrl}' }], autoplay: true, muted: true });
-  player.init();
+    const embed = `<script src="https://cdn.adbunny.in/adbunny.js"
+  data-api="https://cdn.adbunny.in"
+  data-publisher="${tag}"
+  data-target="#ad-container"
+  data-slot="leaderboard">
 <\/script>`
+
+    const copy = (text: string) => navigator.clipboard.writeText(text)
 
     return (
       <div className="max-w-2xl">
         <Card>
-          <CardHeader><CardTitle>Campaign Created 🎉</CardTitle></CardHeader>
+          <CardHeader><CardTitle>Campaign Created</CardTitle></CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-sm">Publisher Tag: <code className="bg-muted px-2 py-0.5 rounded text-sm">{tag}</code></p>
             <div>
-              <p className="text-sm font-medium mb-2">Embed this on your publisher page:</p>
+              <p className="text-sm font-medium mb-1">Publisher Tag</p>
+              <div className="flex items-center gap-2">
+                <code className="bg-muted px-2 py-1 rounded text-sm flex-1">{tag}</code>
+                <Button onClick={() => copy(tag)}>Copy</Button>
+              </div>
+            </div>
+            <div>
+              <p className="text-sm font-medium mb-1">Config URL</p>
+              <div className="flex items-center gap-2">
+                <code className="bg-muted px-2 py-1 rounded text-sm flex-1">https://cdn.adbunny.in/config/{tag}.json</code>
+                <Button onClick={() => copy(`https://cdn.adbunny.in/config/${tag}.json`)}>Copy</Button>
+              </div>
+            </div>
+            <div>
+              <p className="text-sm font-medium mb-2">Embed Snippet</p>
               <pre className="bg-zinc-950 text-zinc-100 p-4 rounded-lg text-xs overflow-x-auto">{embed}</pre>
+              <Button onClick={() => copy(embed)} className="mt-2">Copy Snippet</Button>
             </div>
             <Button onClick={() => nav('/')}>Back to Campaigns</Button>
           </CardContent>

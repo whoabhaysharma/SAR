@@ -1,4 +1,18 @@
 services:
+  nats:
+    image: nats:2.10-alpine
+    restart: unless-stopped
+    command: "-js -m 8222"
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8222/healthz"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 3s
+
   clickhouse:
     image: clickhouse/clickhouse-server:24.3
     restart: unless-stopped
@@ -33,8 +47,12 @@ services:
       FLUSH_WORKERS: "12"
       BATCH_MAX_SIZE: "5000"
       BATCH_INTERVAL_MS: "1000"
+      NATS_URL: "nats://nats:4222"
+      NATS_SUBJECT: "analytics.events"
     depends_on:
       clickhouse:
+        condition: service_healthy
+      nats:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:8080/health?token=admin-secret-token"]

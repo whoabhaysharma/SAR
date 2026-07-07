@@ -18,38 +18,47 @@ var pixelGIF = []byte{
 	0x01, 0x00, 0x3b,
 }
 
-func handleCollect(ctx *fasthttp.RequestCtx, raw chan<- string, received, dropped *atomic.Int64) {
-	q := string(ctx.URI().QueryString())
-	if q == "" {
+type eventPublisher func(AnalyticsEvent) bool
+
+func handleCollect(ctx *fasthttp.RequestCtx, publish eventPublisher, received, dropped *atomic.Int64) {
+	q := ctx.URI().QueryString()
+	if len(q) == 0 {
 		ctx.SetStatusCode(fasthttp.StatusBadRequest)
 		return
 	}
 
-	select {
-	case raw <- q:
+	ev := parseQueryBytes(q)
+
+	if publish(ev) {
 		received.Add(1)
-	default:
+	} else {
 		dropped.Add(1)
 	}
 
+	ctx.SetStatusCode(fasthttp.StatusOK)
 	ctx.Response.Header.SetContentType("image/gif")
-	ctx.Response.Header.Set("Cache-Control", "no-store, no-cache, must-revalidate")
-	ctx.Response.Header.Set("Access-Control-Allow-Origin", "*")
+	ctx.Response.Header.SetBytesKV([]byte("Cache-Control"), []byte("no-store, no-cache, must-revalidate"))
+	ctx.Response.Header.SetBytesKV([]byte("Access-Control-Allow-Origin"), []byte("*"))
 	ctx.Write(pixelGIF)
 }
 
-func handleHealth(ctx *fasthttp.RequestCtx, cfg Config, received, flushed, dropped *atomic.Int64, raw chan string) {
+type metrics struct {
+	received, flushed, dropped, pending *atomic.Int64
+	startTime                           time.Time
+}
+
+func handleHealth(ctx *fasthttp.RequestCtx, cfg Config, m *metrics) {
 	if !authorized(ctx, cfg.AdminToken) {
 		ctx.SetStatusCode(fasthttp.StatusUnauthorized)
 		ctx.SetBody([]byte(`{"error":"Unauthorized"}`))
 		return
 	}
-	rate := float64(flushed.Load()) / timeSinceStart().Seconds()
+	rate := float64(m.flushed.Load()) / time.Since(m.startTime).Seconds()
 	ctx.SetContentType("application/json")
 	fmt.Fprintf(ctx,
-		`{"ok":true,"uptime":%.1f,"received":%d,"flushed":%d,"buffer":%d,"dropped":%d,"rate":%.0f}`,
-		timeSinceStart().Seconds(), received.Load(), flushed.Load(),
-		len(raw), dropped.Load(), rate)
+		`{"ok":true,"uptime":%.1f,"received":%d,"flushed":%d,"pending":%d,"dropped":%d,"rate":%.0f}`,
+		time.Since(m.startTime).Seconds(), m.received.Load(), m.flushed.Load(),
+		m.pending.Load(), m.dropped.Load(), rate)
 }
 
 func handleRecent(ctx *fasthttp.RequestCtx, cfg Config, ch *chClient) {
@@ -88,4 +97,4 @@ func authorized(ctx *fasthttp.RequestCtx, token string) bool {
 	return false
 }
 
-func timeSinceStart() time.Duration { return time.Since(startTime) }
+

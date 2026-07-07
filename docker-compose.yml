@@ -1,2 +1,2 @@
 include:
-  - analytics-server/docker-compose.yml
+  - analytics-server-go/docker-compose.yml

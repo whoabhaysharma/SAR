@@ -44,7 +44,7 @@ services:
       CLICKHOUSE_PASSWORD: analytics123
       CLICKHOUSE_DB: analytics
       ADMIN_TOKEN: "admin-secret-token"
-      FLUSH_WORKERS: "4"
+      FLUSH_WORKERS: "1"
       BATCH_MAX_SIZE: "5000"
       BATCH_INTERVAL_MS: "250"
       NATS_URL: "nats://nats:4222"

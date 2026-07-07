@@ -35,7 +35,7 @@ func loadConfig() Config {
 	port, _ := strconv.Atoi(getEnv("PORT", "8080"))
 	batchSize, _ := strconv.Atoi(getEnv("BATCH_MAX_SIZE", "5000"))
 	batchInterval, _ := strconv.Atoi(getEnv("BATCH_INTERVAL_MS", "250"))
-	flushWorkers, _ := strconv.Atoi(getEnv("FLUSH_WORKERS", "4"))
+	flushWorkers, _ := strconv.Atoi(getEnv("FLUSH_WORKERS", "1"))
 	return Config{
 		Port:             port,
 		ClickHouseHTTP:   getEnv("CLICKHOUSE_HOST", "http://localhost:8123"),
@@ -133,7 +133,7 @@ func main() {
 	m.pending = new(atomic.Int64)
 
 	publish := publishToJetStream(js)
-	startWorkers(ctx, cfg, js, m)
+	startWorkers(ctx, cfg, js, nc, m)
 	go logStats(m)
 
 	var collectPath = []byte("/collect")

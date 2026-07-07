@@ -34,9 +34,8 @@ CREATE TABLE IF NOT EXISTS %s.ad_events (
   ip          String DEFAULT '',
   userAgent   String DEFAULT '',
   referer     String DEFAULT '',
-  json        String DEFAULT '',
-  _hash       UInt64 DEFAULT 0
-) ENGINE = ReplacingMergeTree(_hash)
+  json        String DEFAULT ''
+) ENGINE = MergeTree
 PARTITION BY toYYYYMM(time)
 ORDER BY (publisher, event, time)
 TTL time + INTERVAL 90 DAY DELETE`, db))

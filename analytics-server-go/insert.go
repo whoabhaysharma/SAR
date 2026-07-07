@@ -2,8 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
-	"hash/fnv"
 	"log"
 	"time"
 
@@ -45,7 +43,7 @@ func runWorker(ctx context.Context, id int, cfg Config, js nats.JetStreamContext
 	for {
 		if len(batch) >= cfg.BatchSize {
 			flushToClickHouse(conn, cfg, batch, m)
-			ackMessages(acks, nc)
+			ackMessages(acks, nc, m)
 			batch = batch[:0]
 			acks = acks[:0]
 		}
@@ -55,7 +53,7 @@ func runWorker(ctx context.Context, id int, cfg Config, js nats.JetStreamContext
 		if err == nats.ErrTimeout {
 			if len(batch) > 0 {
 				flushToClickHouse(conn, cfg, batch, m)
-				ackMessages(acks, nc)
+				ackMessages(acks, nc, m)
 				batch = batch[:0]
 				acks = acks[:0]
 			}
@@ -117,7 +115,7 @@ func runWorker(ctx context.Context, id int, cfg Config, js nats.JetStreamContext
 drain:
 	if len(batch) > 0 {
 		flushToClickHouse(conn, cfg, batch, m)
-		ackMessages(acks, nc)
+		ackMessages(acks, nc, m)
 	}
 	log.Printf("[w%d] stopped", id)
 }
@@ -133,18 +131,19 @@ func flushToClickHouse(conn clickhouse.Conn, cfg Config, batch []AnalyticsEvent,
 	m.flushed.Add(int64(len(batch)))
 }
 
-func ackMessages(acks []*nats.Msg, nc *nats.Conn) {
+func ackMessages(acks []*nats.Msg, nc *nats.Conn, m *metrics) {
 	if len(acks) == 0 {
 		return
 	}
-		for _, msg := range acks {
-			if err := msg.Respond(nil); err != nil {
-				log.Printf("[ack] error: %v", err)
-			}
+	for _, msg := range acks {
+		if err := msg.Respond(nil); err != nil {
+			log.Printf("[ack] error: %v", err)
 		}
+	}
 	if err := nc.Flush(); err != nil {
 		log.Printf("[ack] flush error: %v", err)
 	}
+	m.pending.Add(int64(-len(acks)))
 }
 
 func extractSeq(reply string) uint64 {
@@ -183,17 +182,10 @@ func insertBatch(conn clickhouse.Conn, db string, events []AnalyticsEvent) error
 	now := time.Now()
 	for i := range events {
 		ev := &events[i]
-		h := fnv.New64a()
-		h.Write([]byte(ev.Event))
-		h.Write([]byte(ev.Publisher))
-		h.Write([]byte(ev.Slot))
-		h.Write([]byte(fmt.Sprintf("%d", ev.Ts)))
-		h.Write([]byte(ev.Tag))
-		hash := h.Sum64()
 		if err := batch.Append(
 			ev.Event, ev.Publisher, ev.Slot, ev.Ts, now,
 			ev.Tag, ev.ErrMsg, ev.Quartile, ev.Duration, ev.MediaCount,
-			ev.TagUrl, ev.Progress, "", "", "", "", hash,
+			ev.TagUrl, ev.Progress, "", "", "", "",
 		); err != nil {
 			return err
 		}

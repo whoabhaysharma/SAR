@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.nav-links a').forEach(link => {
       link.addEventListener('click', () => links.classList.remove('open'));
     });
+    const navClose = document.querySelector('.nav-close');
+    if (navClose) {
+      navClose.addEventListener('click', () => links.classList.remove('open'));
+    }
     document.addEventListener('click', (e) => {
       if (!toggle.contains(e.target) && !links.contains(e.target)) {
         links.classList.remove('open');

@@ -50,16 +50,17 @@ import '../styles/global.css';
 </head>
 <body>
 <nav class="fixed top-0 left-0 right-0 z-50" aria-label="Main navigation" transition:persist>
-  <div class="flex items-center justify-between h-16 px-8 max-w-7xl mx-auto">
-    <a href="/" aria-label="AdBunny home"><Image src={logo} alt="AdBunny" class="h-16 w-auto" /></a>
+  <div class="flex items-center justify-between h-16 px-8 max-w-7xl mx-auto max-md:px-5 max-md:h-14">
+    <a href="/" aria-label="AdBunny home" class="flex items-center gap-0"><Image src={logo} alt="AdBunny" class="h-16 w-auto max-md:h-12" /><span class="font-sans text-2xl font-bold tracking-tight relative max-md:text-xl" style="letter-spacing:-0.03em;top:-4px;margin-left:-6px">adbunny</span></a>
     <div class="nav-links items-center gap-8" role="navigation" aria-label="Site links">
+      <button class="nav-close md:hidden" aria-label="Close menu">×</button>
       <a href="/publishers" class={"text-sm transition-opacity ".concat(path === '/publishers' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">Publishers</a>
       <a href="/how-it-works" class={"text-sm transition-opacity ".concat(path === '/how-it-works' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">How It Works</a>
       <a href="/about" class={"text-sm transition-opacity ".concat(path === '/about' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">About</a>
       <a href="/contact" class={"text-sm transition-opacity ".concat(path === '/contact' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">Contact</a>
       <a href="/get-started" class="text-sm font-semibold transition-opacity hover:opacity-70" style="color:var(--color-text)">Get Started</a>
     </div>
-    <button class="md:hidden flex flex-col gap-[5px] bg-transparent border-none cursor-pointer p-1" aria-label="Toggle menu">
+    <button class="mobile-toggle md:hidden flex flex-col gap-[5px] bg-transparent border-none cursor-pointer p-1" aria-label="Toggle menu">
       <span class="block w-5 h-0.5" style="background:var(--color-text)"></span>
       <span class="block w-5 h-0.5" style="background:var(--color-text)"></span>
     </button>
@@ -71,10 +72,10 @@ import '../styles/global.css';
 </main>
 
 <footer class="dark-noise relative overflow-hidden" style="background:#000;color:var(--color-dark-text);border-top:1px solid var(--color-dark-border)" role="contentinfo">
-  <div class="max-w-7xl mx-auto px-8 pt-24 max-md:pt-16" style="position:relative;z-index:2">
+  <div class="max-w-7xl mx-auto px-8 pt-24 pb-10 max-md:pt-16 max-md:pb-8" style="position:relative;z-index:2">
     <div class="grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-12 max-md:grid-cols-2 max-md:gap-10">
       <div class="max-md:col-span-2">
-        <a href="/"><Image src={logo} alt="AdBunny" class="h-14 w-auto" /></a>
+        <a href="/" class="flex items-center gap-0"><Image src={logo} alt="AdBunny" class="h-14 w-auto" /><span class="font-sans text-xl font-bold tracking-tight relative" style="letter-spacing:-0.03em;top:-2px;margin-left:-4px">adbunny</span></a>
         <p class="text-sm leading-relaxed max-w-[20rem] mt-6" style="color:var(--color-text-tertiary)">AI-optimized banner monetization for remnant inventory. One tag, real-time optimization, zero conflict with your existing ad stack.</p>
       </div>
       <div>

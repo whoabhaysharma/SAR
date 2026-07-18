@@ -1,4 +1,6 @@
 ---
+import hourglass from '../assets/images/metaphor-hourglass-glow.png';
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
@@ -18,7 +20,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <a href="/get-started" class="btn btn-primary btn-lg">Get Your JS Tag</a>
       </div>
       <div class="relative">
-        <img src="/images/metaphor-hourglass-glow.png" alt="AdBunny publisher dashboard showing fill rate improvement" class="w-full" />
+        <Image src={hourglass} alt="AdBunny publisher showing fill rate improvement" class="w-full" />
       </div>
     </div>
   </div>

@@ -1,4 +1,9 @@
 ---
+import { Image } from 'astro:assets';
+import keyGlow from '../assets/images/metaphor-key-glow.png';
+import funnelGlow from '../assets/images/metaphor-funnel-glow.png';
+import compassGlow from '../assets/images/metaphor-compass-glow.png';
+import doorGlow from '../assets/images/metaphor-door-glow.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
@@ -62,7 +67,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
       <div class="reveal-y">
         <div class="relative">
-          <img src="/images/metaphor-key-glow.png" alt="Publisher remnant inventory being filled automatically" class="w-full" />
+          <Image src={keyGlow} alt="Publisher remnant inventory being filled automatically" class="w-full" />
         </div>
       </div>
     </div>
@@ -75,7 +80,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-12">
       <div class="reveal-y max-md:order-2">
         <div class="relative">
-          <img src="/images/metaphor-funnel-glow.png" alt="Aggregated remnant inventory across the AdBunny network" class="w-full" />
+          <Image src={funnelGlow} alt="Aggregated remnant inventory across the AdBunny network" class="w-full" />
         </div>
       </div>
       <div class="reveal-y max-md:order-1">
@@ -106,7 +111,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
       <div class="reveal-y">
         <div class="relative">
-          <img src="/images/metaphor-compass-glow.png" alt="AI evaluating demand for every impression in real time" class="w-full" />
+          <Image src={compassGlow} alt="AI evaluating demand for every impression in real time" class="w-full" />
         </div>
       </div>
     </div>
@@ -169,7 +174,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <section class="relative overflow-hidden" style="border-top:1px solid var(--color-border)">
   <div class="grid grid-cols-2 max-md:grid-cols-1">
     <div class="relative min-h-[32rem] max-md:min-h-[20rem]">
-      <img src="/images/metaphor-door-glow.png" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover" style="mask-image:linear-gradient(to right,#000 55%,transparent 100%);-webkit-mask-image:linear-gradient(to right,#000 55%,transparent 100%)" />
+      <Image src={doorGlow} alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover" style="mask-image:linear-gradient(to right,#000 55%,transparent 100%);-webkit-mask-image:linear-gradient(to right,#000 55%,transparent 100%)" />
     </div>
     <div class="flex flex-col justify-center py-32 max-md:py-20 px-16 max-md:px-8">
       <p class="kicker mb-10 reveal-y">Get started</p>

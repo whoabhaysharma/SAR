@@ -1,4 +1,9 @@
 ---
+import hourglass from '../assets/images/metaphor-hourglass-glow.png';
+import step3 from '../assets/images/step3-ai-glow.png';
+import step2 from '../assets/images/step2-evaluate-glow.png';
+import step1 from '../assets/images/step1-tag-glow.png';
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
@@ -29,7 +34,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="text-base leading-relaxed max-w-[28rem]" style="color:var(--color-text-secondary)">No SDK, no server integration, no waterfall configuration. Just one tag into the pages or slots you want AdBunny to cover.</p>
       </div>
       <div>
-        <img src="/images/step1-tag-glow.png" alt="Adding the AdBunny tag to your page" class="w-full" />
+        <Image src={step1} alt="Adding the AdBunny tag to your page" class="w-full" />
       </div>
     </div>
   </div>
@@ -40,7 +45,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <div class="max-w-[80rem] mx-auto px-8">
     <div class="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-12">
       <div class="max-md:order-2">
-        <img src="/images/step2-evaluate-glow.png" alt="AdBunny evaluating available demand" class="w-full" />
+        <Image src={step2} alt="AdBunny evaluating available demand" class="w-full" />
       </div>
       <div class="max-md:order-1">
         <div class="flex items-baseline gap-5 mb-8">
@@ -67,7 +72,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="text-base leading-relaxed max-w-[28rem]" style="color:var(--color-text-secondary)">Rather than following a fixed, static call order, the system picks whichever available banner is likely to generate the most revenue for that impression, right now.</p>
       </div>
       <div>
-        <img src="/images/step3-ai-glow.png" alt="AI selecting the best-paying banner" class="w-full" />
+        <Image src={step3} alt="AI selecting the best-paying banner" class="w-full" />
       </div>
     </div>
   </div>
@@ -78,7 +83,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <div class="max-w-[80rem] mx-auto px-8">
     <div class="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-12">
       <div class="max-md:order-2">
-        <img src="/images/metaphor-hourglass-glow.png" alt="Revenue flowing from filled impressions" class="w-full" />
+        <Image src={hourglass} alt="Revenue flowing from filled impressions" class="w-full" />
       </div>
       <div class="max-md:order-1">
         <div class="flex items-baseline gap-5 mb-8">

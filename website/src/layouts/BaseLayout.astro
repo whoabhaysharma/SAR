@@ -1,4 +1,7 @@
 ---
+import logo from '../assets/images/adbunny_logo.png';
+import { Image } from 'astro:assets';
+import { ViewTransitions } from 'astro:transitions';
 const { title, description, keywords = '' } = Astro.props;
 const path = Astro.url.pathname;
 const canonical = new URL(path, Astro.site).toString();
@@ -28,6 +31,7 @@ import '../styles/global.css';
 <meta name="twitter:title" content={title}>
 <meta name="twitter:description" content={description}>
 <meta name="twitter:image" content="https://adbunny.in/adbunny_logo.png">
+<ViewTransitions />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,9 +49,9 @@ import '../styles/global.css';
 </script>
 </head>
 <body>
-<nav class="fixed top-0 left-0 right-0 z-50" aria-label="Main navigation">
+<nav class="fixed top-0 left-0 right-0 z-50" aria-label="Main navigation" transition:persist>
   <div class="flex items-center justify-between h-16 px-8 max-w-7xl mx-auto">
-    <a href="/" aria-label="AdBunny home"><img src="/adbunny_logo.png" alt="AdBunny" class="h-16 w-auto" /></a>
+    <a href="/" aria-label="AdBunny home"><Image src={logo} alt="AdBunny" class="h-16 w-auto" /></a>
     <div class="nav-links items-center gap-8" role="navigation" aria-label="Site links">
       <a href="/publishers" class={"text-sm transition-opacity ".concat(path === '/publishers' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">Publishers</a>
       <a href="/how-it-works" class={"text-sm transition-opacity ".concat(path === '/how-it-works' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">How It Works</a>
@@ -70,7 +74,7 @@ import '../styles/global.css';
   <div class="max-w-7xl mx-auto px-8 pt-24 max-md:pt-16" style="position:relative;z-index:2">
     <div class="grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-12 max-md:grid-cols-2 max-md:gap-10">
       <div class="max-md:col-span-2">
-        <a href="/"><img src="/adbunny_logo.png" alt="AdBunny" class="h-14 w-auto" /></a>
+        <a href="/"><Image src={logo} alt="AdBunny" class="h-14 w-auto" /></a>
         <p class="text-sm leading-relaxed max-w-[20rem] mt-6" style="color:var(--color-text-tertiary)">AI-optimized banner monetization for remnant inventory. One tag, real-time optimization, zero conflict with your existing ad stack.</p>
       </div>
       <div>

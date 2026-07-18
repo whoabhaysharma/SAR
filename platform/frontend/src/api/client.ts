@@ -12,7 +12,6 @@ async function request(path: string, options: RequestInit = {}) {
   const res = await fetch(BASE + path, { ...options, headers })
   if (res.status === 401) {
     localStorage.removeItem('token')
-    window.location.href = '/login'
     throw new Error('Unauthorized')
   }
   const data = await res.json()

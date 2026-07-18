@@ -14,6 +14,7 @@ import '../styles/global.css';
 <meta name="description" content={description}>
 <meta name="keywords" content={keywords}>
 <link rel="canonical" href={canonical}>
+<link rel="icon" type="image/png" href="/adbunny_logo.png">
 
 <meta property="og:title" content={title}>
 <meta property="og:description" content={description}>
@@ -43,7 +44,7 @@ import '../styles/global.css';
 <body>
 <nav class="fixed top-0 left-0 right-0 z-50" aria-label="Main navigation">
   <div class="flex items-center justify-between h-16 px-8">
-    <a href="/" class="font-extrabold text-lg tracking-tight" style="color:var(--color-text)" aria-label="AdBunny home">AdBunny</a>
+    <a href="/" aria-label="AdBunny home"><img src="/adbunny_logo.png" alt="AdBunny" class="h-14 w-auto" /></a>
     <div class="nav-links items-center gap-8" role="navigation" aria-label="Site links">
       <a href="/publishers" class={"text-sm transition-opacity ".concat(path === '/publishers' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">Publishers</a>
       <a href="/how-it-works" class={"text-sm transition-opacity ".concat(path === '/how-it-works' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">How It Works</a>
@@ -64,7 +65,7 @@ import '../styles/global.css';
 <footer class="dark-noise py-20 pb-8" style="background:var(--color-dark-bg);color:var(--color-dark-text)" role="contentinfo">
   <div class="max-w-[80rem] mx-auto px-8" style="position:relative;z-index:2">
     <div class="mb-12">
-      <a href="/" class="font-extrabold text-xl tracking-tight" style="color:var(--color-text)">Ad<span style="color:var(--color-text-tertiary)">Bunny</span></a>
+      <a href="/"><img src="/adbunny_logo.png" alt="AdBunny" class="h-16 w-auto" /></a>
     </div>
     <div class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-12 max-md:grid-cols-2 max-md:gap-8">
       <div class="max-md:col-span-2">

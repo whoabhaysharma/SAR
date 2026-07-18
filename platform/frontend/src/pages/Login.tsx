@@ -13,7 +13,11 @@ export default function Login() {
   const [hasAdmin, setHasAdmin] = useState(true)
 
   useEffect(() => {
-    api.me().catch(() => setHasAdmin(false))
+    const t = localStorage.getItem('token')
+    if (!t) return setHasAdmin(false)
+    fetch('/api/auth/me', { headers: { Authorization: `Bearer ${t}` } })
+      .then(r => { if (!r.ok) setHasAdmin(false) })
+      .catch(() => setHasAdmin(false))
   }, [])
 
   const login = async () => {
@@ -28,17 +32,18 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-background">
       <Card className="w-full max-w-sm mx-4">
         <CardHeader className="text-center">
+
           <CardTitle className="text-2xl">Analytics Platform</CardTitle>
           <CardDescription>Sign in to your account</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
           {!hasAdmin && (
-            <p className="text-sm text-amber-500 text-center">
+            <p className="text-sm text-muted-foreground text-center">
               No admin found.{' '}
-              <Link to="/setup" className="text-blue-500 underline">Create one</Link>
+              <Link to="/setup" className="text-foreground underline">Create one</Link>
             </p>
           )}
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error && <p className="text-sm text-destructive">{error}</p>}
           <Input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
           <Input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} onKeyDown={e => e.key === 'Enter' && login()} />
           <Button className="w-full" onClick={login}>Sign In</Button>

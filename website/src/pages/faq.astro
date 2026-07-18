@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="AdBunny FAQ — Banner Monetization Questions Answered"
+  description="Answers to common questions about AdBunny's AI banner monetization platform, integration, and how it works alongside your existing ad stack."
+  keywords="ad monetization platform FAQ, remnant inventory questions, ad tag integration FAQ"
+>
+<section class="page-header">
+  <div class="container">
+    <h1>Frequently Asked Questions</h1>
+  </div>
+</section>
+
+<section class="section section-sm">
+  <div class="container">
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">Will AdBunny conflict with my existing ad stack?</button>
+        <div class="faq-a"><div class="faq-a-inner">No. AdBunny is designed to run on remnant inventory only — the impressions your existing direct deals or header bidding partners don't fill — so it doesn't compete with your primary demand.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How long does integration take?</button>
+        <div class="faq-a"><div class="faq-a-inner">Typically minutes. It's a single JS tag, not a waterfall setup or SDK integration, so there's minimal engineering lift.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do I need to configure anything after installing the tag?</button>
+        <div class="faq-a"><div class="faq-a-inner">No manual configuration is required. The AI optimization layer selects the best-paying banner per impression automatically.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What ad formats does AdBunny support?</button>
+        <div class="faq-a"><div class="faq-a-inner">Banner formats across standard IAB sizes. Contact our team to confirm exact supported sizes for your integration.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is AdBunny suitable for small publishers, or only large ones?</button>
+        <div class="faq-a"><div class="faq-a-inner">Both. Because setup is a single tag with no ad-ops overhead, it works for independent sites as well as larger publishers looking to optimize remnant yield.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How does AdBunny's AI decide which banner to serve?</button>
+        <div class="faq-a"><div class="faq-a-inner">For each impression, the optimization layer evaluates available demand in real time and selects the option likely to generate the highest revenue for that specific impression, rather than following a fixed, static order.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can ad networks or media buyers get access to AdBunny's inventory?</button>
+        <div class="faq-a"><div class="faq-a-inner">Yes — AdBunny offers programmatic access to aggregated remnant banner inventory for ad networks, DSPs, and media buyers. <a href="/advertisers" style="color:var(--c-text-secondary);font-weight:500;">See our Advertisers page</a>.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-cta">
+  <div class="container">
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="/" class="btn btn-primary">Get Your JS Tag</a>
+      <a href="/advertisers" class="btn btn-outline">Talk to Our Demand Team</a>
+    </div>
+  </div>
+</section>
+</BaseLayout>

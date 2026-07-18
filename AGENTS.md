@@ -1,4 +1,4 @@
-# SAR / AdBunny — Agent Instructions
+# AdBunny — Agent Instructions
 
 ## Structure
 

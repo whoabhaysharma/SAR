@@ -24,11 +24,12 @@ export default function Setup() {
     <div className="min-h-screen flex items-center justify-center bg-background">
       <Card className="w-full max-w-sm mx-4">
         <CardHeader className="text-center">
+
           <CardTitle className="text-2xl">Setup</CardTitle>
           <CardDescription>Create the super admin account</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error && <p className="text-sm text-destructive">{error}</p>}
           <Input placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
           <Input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
           <Input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} onKeyDown={e => e.key === 'Enter' && create()} />

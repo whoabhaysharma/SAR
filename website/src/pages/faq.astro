@@ -1,5 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Will AdBunny conflict with my existing ad stack?","acceptedAnswer":{"@type":"Answer","text":"No. AdBunny is designed to run on remnant inventory only — the impressions your existing direct deals or header bidding partners don't fill — so it doesn't compete with your primary demand."}},
+    {"@type":"Question","name":"How long does integration take?","acceptedAnswer":{"@type":"Answer","text":"Typically minutes. It's a single JS tag, not a waterfall setup or SDK integration, so there's minimal engineering lift."}},
+    {"@type":"Question","name":"Do I need to configure anything after installing the tag?","acceptedAnswer":{"@type":"Answer","text":"No manual configuration is required. The AI optimization layer selects the best-paying banner per impression automatically."}},
+    {"@type":"Question","name":"What ad formats does AdBunny support?","acceptedAnswer":{"@type":"Answer","text":"Banner formats across standard IAB sizes. Contact our team to confirm exact supported sizes for your integration."}},
+    {"@type":"Question","name":"Is AdBunny suitable for small publishers, or only large ones?","acceptedAnswer":{"@type":"Answer","text":"Both. Because setup is a single tag with no ad-ops overhead, it works for independent sites as well as larger publishers looking to optimize remnant yield."}},
+    {"@type":"Question","name":"How does AdBunny's AI decide which banner to serve?","acceptedAnswer":{"@type":"Answer","text":"For each impression, the optimization layer evaluates available demand in real time and selects the option likely to generate the highest revenue for that specific impression, rather than following a fixed, static order."}},
+    {"@type":"Question","name":"Can ad networks or media buyers get access to AdBunny's inventory?","acceptedAnswer":{"@type":"Answer","text":"Yes — AdBunny offers programmatic access to aggregated remnant banner inventory for ad networks, DSPs, and media buyers."}}
+  ]
+};
 ---
 
 <BaseLayout
@@ -46,6 +59,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </section>
 
 <section class="pb-20 text-center">
-  <a href="/" class="btn btn-primary">Get Your JS Tag</a>
+  <a href="/get-started" class="btn btn-primary">Get Your JS Tag</a>
 </section>
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)}></script>
 </BaseLayout>

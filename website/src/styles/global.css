@@ -1,23 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0a0a0a;
-  --color-surface: #111111;
-  --color-surface-hover: #181818;
-  --color-elevated: #111111;
+  --color-bg: #000000;
+  --color-surface: #0a0a0a;
+  --color-surface-hover: #141414;
+  --color-elevated: #0a0a0a;
   --color-text: #f5f5f7;
-  --color-text-secondary: #86868b;
+  --color-text-secondary: #9b9ba1;
   --color-text-tertiary: #6e6e73;
+  --color-text-dim: #555558;
   --color-accent: #f5f5f7;
   --color-accent-bg: rgba(255, 255, 255, 0.06);
   --color-accent-border: rgba(255, 255, 255, 0.1);
-  --color-border: rgba(255, 255, 255, 0.06);
-  --color-border-strong: rgba(255, 255, 255, 0.12);
-  --color-dark-bg: #0a0a0a;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+  --color-dark-bg: #000000;
   --color-dark-text: #f5f5f7;
-  --color-dark-secondary: #86868b;
-  --color-dark-border: rgba(255, 255, 255, 0.06);
+  --color-dark-secondary: #9b9ba1;
+  --color-dark-border: rgba(255, 255, 255, 0.08);
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Playfair Display', 'Georgia', serif;
   --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
 }
 
@@ -45,15 +47,105 @@ body {
   z-index: 1;
 }
 
+/* ───── CRED-inspired design system ───── */
+
+/* Wide-tracked uppercase micro label */
+.kicker {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: var(--color-text-tertiary);
+}
+
+/* Hairline chapter divider */
+.hairline {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Big serif manifesto statement: dim words, key words lit */
+.dim-statement {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  color: var(--color-text-dim);
+}
+.dim-statement em,
+.dim-statement strong {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* Chapter images dissolving into black */
+.img-fade {
+  -webkit-mask-image: radial-gradient(120% 120% at 50% 50%, #000 55%, transparent 98%);
+  mask-image: radial-gradient(120% 120% at 50% 50%, #000 55%, transparent 98%);
+}
+.img-fade-x {
+  -webkit-mask-image: linear-gradient(to right, #000 62%, transparent 98%);
+  mask-image: linear-gradient(to right, #000 62%, transparent 98%);
+}
+
+/* Footer */
+.footer-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--color-text-tertiary);
+  margin-bottom: 1.125rem;
+}
+.footer-link {
+  display: block;
+  font-size: 0.875rem;
+  padding: 0.375rem 0;
+  color: var(--color-text-secondary);
+  transition: color 0.15s;
+}
+.footer-link:hover { color: var(--color-text); }
+
+
+/* Scroll-linked motion: content stays visible, only position eases in */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal-y {
+      animation: reveal-y linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 90%;
+    }
+    @keyframes reveal-y {
+      from { transform: translateY(56px); }
+      to { transform: translateY(0); }
+    }
+    .bar-wrap {
+      overflow: hidden;
+    }
+    .bar-wrap .bar-grow {
+      transform-origin: left;
+      animation: bar-grow linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 90%;
+    }
+    @keyframes bar-grow {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+  }
+}
+
 /* ───── Subpage Component Styles ───── */
 
 @layer components {
   .page-header {
-    @apply pt-24 pb-12 text-center;
+    @apply pt-32 pb-16 text-center;
   }
   .page-header h1 {
-    @apply font-extrabold tracking-tight mx-auto mb-4 leading-tight;
-    font-size: clamp(2rem, 5vw, 3.25rem);
+    @apply font-serif mx-auto mb-5 leading-[1.08] tracking-tight;
+    font-size: clamp(2.5rem, 5.5vw, 4rem);
+    font-weight: 550;
   }
   .page-header p {
     @apply leading-relaxed mx-auto;
@@ -61,30 +153,33 @@ body {
     color: var(--color-text-secondary);
     max-width: 34rem;
   }
-  .section { @apply py-20; }
+  .section { @apply py-24; }
   .section-alt {
     background: var(--color-surface);
   }
   .section-sm { @apply py-12 pb-20; }
   .section-cta {
-    @apply py-20 text-center;
+    @apply py-24 text-center;
   }
   .section-cta h2 {
-    @apply font-bold tracking-tight mb-3;
-    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    @apply font-serif tracking-tight mb-4;
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 550;
   }
   .section-cta p {
     font-size: 1rem;
     color: var(--color-text-secondary);
-    @apply mb-6;
+    @apply mb-8;
   }
   .label {
-    @apply inline-block text-xs font-semibold uppercase tracking-widest mb-4;
-    color: var(--color-text-secondary);
+    @apply inline-block text-xs font-semibold uppercase mb-4;
+    letter-spacing: 0.28em;
+    color: var(--color-text-tertiary);
   }
   .section-title {
-    @apply font-bold tracking-tight mb-4;
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    @apply font-serif tracking-tight mb-4;
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 550;
   }
   .section-sub {
     @apply text-base leading-relaxed;
@@ -96,15 +191,19 @@ body {
   }
   .card {
     @apply p-8;
-    background: var(--color-surface);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    transition: border-color 0.2s, background 0.2s;
   }
-  .card:hover { background: var(--color-surface-hover); }
+  .card:hover {
+    background: var(--color-surface);
+    border-color: var(--color-border-strong);
+  }
   .card-icon {
     @apply w-11 h-11 flex items-center justify-center mb-5;
     color: var(--color-text);
-    background: var(--color-accent-bg);
   }
-  .card-icon svg { @apply w-[22px] h-[22px]; }
+  .card-icon svg { @apply w-[26px] h-[26px]; }
   .card h3 {
     @apply text-lg font-bold tracking-tight mb-2;
   }
@@ -116,8 +215,9 @@ body {
     @apply grid grid-cols-2 gap-16 items-center;
   }
   .col-text h2 {
-    @apply font-bold tracking-tight mb-4;
-    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    @apply font-serif tracking-tight mb-4;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 550;
   }
   .col-text p {
     font-size: 1rem;

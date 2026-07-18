@@ -51,5 +51,5 @@ export default function App() {
 }
 
 const styles = {
-  loading: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', color: '#666', fontFamily: 'sans-serif' },
+  loading: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', color: '#999', fontFamily: 'sans-serif' },
 } as const

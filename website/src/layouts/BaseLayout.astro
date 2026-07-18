@@ -13,22 +13,25 @@ import '../styles/global.css';
 <title>{title}</title>
 <meta name="description" content={description}>
 <meta name="keywords" content={keywords}>
+<meta name="robots" content="index, follow">
 <link rel="canonical" href={canonical}>
-<link rel="icon" type="image/png" href="/adbunny_logo.png">
+<link rel="icon" type="image/png" href="/favicon.png">
 
 <meta property="og:title" content={title}>
 <meta property="og:description" content={description}>
 <meta property="og:type" content="website">
 <meta property="og:url" content={canonical}>
+<meta property="og:image" content="https://adbunny.in/adbunny_logo.png">
 <meta property="og:site_name" content="AdBunny">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content={title}>
 <meta name="twitter:description" content={description}>
+<meta name="twitter:image" content="https://adbunny.in/adbunny_logo.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script type="application/ld+json" is:inline>
 {
@@ -49,7 +52,8 @@ import '../styles/global.css';
       <a href="/publishers" class={"text-sm transition-opacity ".concat(path === '/publishers' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">Publishers</a>
       <a href="/how-it-works" class={"text-sm transition-opacity ".concat(path === '/how-it-works' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">How It Works</a>
       <a href="/about" class={"text-sm transition-opacity ".concat(path === '/about' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">About</a>
-      <a href="/" class="text-sm font-semibold transition-opacity hover:opacity-70" style="color:var(--color-text)">Get Started</a>
+      <a href="/contact" class={"text-sm transition-opacity ".concat(path === '/contact' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">Contact</a>
+      <a href="/get-started" class="text-sm font-semibold transition-opacity hover:opacity-70" style="color:var(--color-text)">Get Started</a>
     </div>
     <button class="md:hidden flex flex-col gap-[5px] bg-transparent border-none cursor-pointer p-1" aria-label="Toggle menu">
       <span class="block w-5 h-0.5" style="background:var(--color-text)"></span>
@@ -62,38 +66,37 @@ import '../styles/global.css';
   <slot />
 </main>
 
-<footer class="dark-noise py-20 pb-8" style="background:var(--color-dark-bg);color:var(--color-dark-text)" role="contentinfo">
-  <div class="max-w-7xl mx-auto px-8" style="position:relative;z-index:2">
-    <div class="mb-12">
-      <a href="/"><img src="/adbunny_logo.png" alt="AdBunny" class="h-16 w-auto" /></a>
-    </div>
-    <div class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-12 max-md:grid-cols-2 max-md:gap-8">
+<footer class="dark-noise relative overflow-hidden" style="background:#000;color:var(--color-dark-text);border-top:1px solid var(--color-dark-border)" role="contentinfo">
+  <div class="max-w-7xl mx-auto px-8 pt-24 max-md:pt-16" style="position:relative;z-index:2">
+    <div class="grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-12 max-md:grid-cols-2 max-md:gap-10">
       <div class="max-md:col-span-2">
-        <p class="text-sm leading-relaxed max-w-[22rem]" style="color:var(--color-text-tertiary)">AI-optimized banner monetization for remnant inventory. One tag, real-time optimization, zero conflict with your existing ad stack.</p>
+        <a href="/"><img src="/adbunny_logo.png" alt="AdBunny" class="h-14 w-auto" /></a>
+        <p class="text-sm leading-relaxed max-w-[20rem] mt-6" style="color:var(--color-text-tertiary)">AI-optimized banner monetization for remnant inventory. One tag, real-time optimization, zero conflict with your existing ad stack.</p>
       </div>
       <div>
-        <h4 class="text-xs font-semibold uppercase tracking-widest mb-4" style="color:var(--color-text-tertiary)">Platform</h4>
-        <a href="/publishers" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">For Publishers</a>
-        <a href="/advertisers" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">For Ad Networks</a>
-        <a href="/how-it-works" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">How It Works</a>
-        <a href="/resources" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">Resources</a>
+        <h4 class="footer-label">Platform</h4>
+        <a href="/publishers" class="footer-link">For Publishers</a>
+        <a href="/advertisers" class="footer-link">For Ad Networks</a>
+        <a href="/how-it-works" class="footer-link">How It Works</a>
+        <a href="/resources" class="footer-link">Resources</a>
       </div>
       <div>
-        <h4 class="text-xs font-semibold uppercase tracking-widest mb-4" style="color:var(--color-text-tertiary)">Company</h4>
-        <a href="/about" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">About</a>
-        <a href="/faq" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">FAQ</a>
+        <h4 class="footer-label">Company</h4>
+        <a href="/about" class="footer-link">About</a>
+        <a href="/faq" class="footer-link">FAQ</a>
       </div>
       <div>
-        <h4 class="text-xs font-semibold uppercase tracking-widest mb-4" style="color:var(--color-text-tertiary)">Contact</h4>
-        <a href="mailto:info@adbunny.in" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">info@adbunny.in</a>
-        <a href="/" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">Get Your JS Tag</a>
-        <a href="/advertisers" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">Talk to Demand Team</a>
+        <h4 class="footer-label">Contact</h4>
+        <a href="/contact" class="footer-link">Send a Message</a>
+        <a href="mailto:info@adbunny.in" class="footer-link">info@adbunny.in</a>
+        <a href="/" class="footer-link">Get Your JS Tag</a>
       </div>
     </div>
-    <div class="mt-16 pt-8 flex justify-between flex-wrap gap-2 text-xs" style="color:var(--color-text-tertiary);border-top:1px solid var(--color-dark-border)">
+    <div class="mt-20 pt-6 flex justify-between flex-wrap gap-2 text-[0.6875rem] tracking-wide max-md:mt-14" style="color:var(--color-text-tertiary);border-top:1px solid var(--color-dark-border)">
       <span>&copy; 2026 AdBunny. All rights reserved.</span>
       <span>AI banner monetization platform</span>
     </div>
+
   </div>
 </footer>
 

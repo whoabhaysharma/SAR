@@ -8,82 +8,94 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   keywords="remnant inventory monetization for publishers, unsold ad space, fill rate optimization, backfill ad monetization"
 >
 
-<section class="pt-28 pb-12 max-md:pt-20">
-  <div class="max-w-[80rem] mx-auto px-8">
-    <div class="max-w-[44rem]">
-      <h1 class="font-extrabold leading-[1.05] tracking-tight mb-4" style="font-size:clamp(2.25rem,5vw,3.5rem)">Monetize every impression your current stack doesn't fill</h1>
-      <p class="text-lg leading-relaxed mb-8 max-w-[34rem]" style="color:var(--color-text-secondary)">If you're running direct deals or header bidding, you already know some percentage of your inventory goes unsold or fills at a discount. AdBunny catches that gap.</p>
-      <a href="/" class="btn btn-primary">Get Your JS Tag</a>
-    </div>
-  </div>
-</section>
-
-<section class="dark-noise py-20 max-md:py-14" style="background:var(--color-surface)">
-  <div class="max-w-[80rem] mx-auto px-8" style="position:relative;z-index:2">
-    <div class="max-w-[40rem]">
-      <h2 class="text-[clamp(1.75rem,3vw,2.25rem)] font-bold leading-snug tracking-tight mb-4">The remnant inventory problem</h2>
-      <p class="text-base leading-relaxed" style="color:var(--color-text-secondary)">Even well-optimized ad stacks leave impressions on the table — geos with thin demand, times of day with low bid density, slots outside your top placements. Traditionally, publishers deal with this using a fixed waterfall: call network A, then B, then C, in a set order, regardless of what's actually the best-paying option for that specific impression. It's simple, but it leaves revenue behind.</p>
-    </div>
-  </div>
-</section>
-
-<section class="py-20 max-md:py-14">
-  <div class="max-w-[80rem] mx-auto px-8">
-    <h2 class="text-[clamp(1.75rem,3vw,2.25rem)] font-bold leading-snug tracking-tight mb-10">How AdBunny fills the gap</h2>
-    <div class="grid grid-cols-3 gap-10 max-md:grid-cols-1">
+<section class="min-h-[85vh] flex items-center" style="border-bottom:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8 py-32 max-md:py-20 w-full">
+    <div class="grid grid-cols-2 gap-16 items-center max-md:grid-cols-1 max-md:gap-12">
       <div>
-        <div class="text-xs font-semibold uppercase tracking-widest mb-3" style="color:var(--color-text-tertiary)">01</div>
-        <h3 class="text-lg font-bold tracking-tight mb-2">Sits below your primary stack</h3>
+        <p class="kicker mb-8">For Publishers</p>
+        <h1 class="font-serif leading-[1.08] tracking-tight mb-6" style="font-size:clamp(2.5rem,5vw,4rem);font-weight:550">monetize every impression your stack doesn't fill</h1>
+        <p class="text-base leading-relaxed mb-10 max-w-[28rem]" style="color:var(--color-text-secondary)">If you're running direct deals or header bidding, you already know some percentage of your inventory goes unsold or fills at a discount. AdBunny catches that gap.</p>
+        <a href="/get-started" class="btn btn-primary btn-lg">Get Your JS Tag</a>
+      </div>
+      <div class="relative">
+        <img src="/images/metaphor-hourglass-glow.png" alt="AdBunny publisher dashboard showing fill rate improvement" class="w-full" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-32 max-md:py-20" style="border-bottom:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <p class="kicker mb-12">The problem</p>
+    <div class="grid grid-cols-2 gap-20 max-md:grid-cols-1 max-md:gap-12">
+      <div>
+        <h2 class="font-serif leading-[1.08] tracking-tight mb-6" style="font-size:clamp(2rem,4vw,3rem);font-weight:550">the remnant inventory problem</h2>
+      </div>
+      <div>
+        <p class="text-base leading-relaxed mb-6" style="color:var(--color-text-secondary)">Even well-optimized ad stacks leave impressions on the table: geos with thin demand, times of day with low bid density, slots outside your top placements.</p>
+        <p class="text-base leading-relaxed" style="color:var(--color-text-secondary)">Traditionally, publishers deal with this using a fixed waterfall: call network A, then B, then C, in a set order, regardless of what's actually the best-paying option for that specific impression. It's simple, but it leaves revenue behind.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-32 max-md:py-20" style="border-bottom:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <p class="kicker mb-12">How it works</p>
+    <h2 class="font-serif leading-[1.08] tracking-tight mb-16 max-md:mb-10" style="font-size:clamp(2rem,4vw,3rem);font-weight:550">how AdBunny fills the gap</h2>
+    <div class="grid grid-cols-3 gap-12 max-md:grid-cols-1">
+      <div style="border-top:1px solid var(--color-border);padding-top:1.5rem">
+        <div class="font-serif text-sm mb-6" style="color:var(--color-text-tertiary)">01</div>
+        <h3 class="font-serif text-xl tracking-tight mb-3" style="font-weight:550">sits below your primary stack</h3>
         <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">AdBunny is a backfill layer, not a replacement. It only evaluates inventory your existing direct deals and header bidding partners didn't fill.</p>
       </div>
-      <div>
-        <div class="text-xs font-semibold uppercase tracking-widest mb-3" style="color:var(--color-text-tertiary)">02</div>
-        <h3 class="text-lg font-bold tracking-tight mb-2">AI picks the best banner per impression</h3>
+      <div style="border-top:1px solid var(--color-border);padding-top:1.5rem">
+        <div class="font-serif text-sm mb-6" style="color:var(--color-text-tertiary)">02</div>
+        <h3 class="font-serif text-xl tracking-tight mb-3" style="font-weight:550">AI picks the best banner per impression</h3>
         <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">Instead of a static call order, AdBunny's optimization layer evaluates real-time demand for each individual impression and serves whichever banner is likely to pay the most.</p>
       </div>
-      <div>
-        <div class="text-xs font-semibold uppercase tracking-widest mb-3" style="color:var(--color-text-tertiary)">03</div>
-        <h3 class="text-lg font-bold tracking-tight mb-2">One tag, no dev lift</h3>
+      <div style="border-top:1px solid var(--color-border);padding-top:1.5rem">
+        <div class="font-serif text-sm mb-6" style="color:var(--color-text-tertiary)">03</div>
+        <h3 class="font-serif text-xl tracking-tight mb-3" style="font-weight:550">one tag, no dev lift</h3>
         <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">No line items to configure, no waterfall to maintain, no new SDK for your engineering team to integrate. Paste the tag, done.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="dark-noise py-20 max-md:py-14" style="background:var(--color-surface)">
-  <div class="max-w-[80rem] mx-auto px-8" style="position:relative;z-index:2">
-    <h2 class="text-[clamp(1.75rem,3vw,2.25rem)] font-bold leading-snug tracking-tight mb-10">What you get</h2>
-    <div class="grid grid-cols-3 gap-10 max-md:grid-cols-1">
+<section class="py-32 max-md:py-20" style="border-bottom:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <p class="kicker mb-12">What you get</p>
+    <div class="grid grid-cols-3 gap-12 max-md:grid-cols-1">
       <div>
-        <h3 class="text-lg font-bold tracking-tight mb-2">Higher fill rate on remnant slots</h3>
+        <h3 class="font-serif text-xl tracking-tight mb-3" style="font-weight:550">higher fill rate on remnant slots</h3>
         <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">AI-driven yield optimization instead of a static, out-of-date waterfall.</p>
       </div>
       <div>
-        <h3 class="text-lg font-bold tracking-tight mb-2">Zero interference with primary demand</h3>
+        <h3 class="font-serif text-xl tracking-tight mb-3" style="font-weight:550">zero interference with primary demand</h3>
         <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">No conflict with your existing direct-sold or header-bidding demand.</p>
       </div>
       <div>
-        <h3 class="text-lg font-bold tracking-tight mb-2">Same-day setup</h3>
+        <h3 class="font-serif text-xl tracking-tight mb-3" style="font-weight:550">same-day setup</h3>
         <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">One tag, no ad-ops overhead, no engineering sprint required.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="py-20 max-md:py-14">
+<section class="py-32 max-md:py-20" style="border-bottom:1px solid var(--color-border)">
   <div class="max-w-[80rem] mx-auto px-8">
+    <p class="kicker mb-12">Who this is for</p>
     <div class="max-w-[40rem]">
-      <h2 class="text-[clamp(1.75rem,3vw,2.25rem)] font-bold leading-snug tracking-tight mb-4">Who this is for</h2>
-      <p class="text-base leading-relaxed" style="color:var(--color-text-secondary)">Publishers and app developers of any size dealing with unsold or underperforming banner inventory — from independent sites supplementing a small ad stack to larger publishers looking to squeeze more yield out of remnant slots without adding ad-ops overhead.</p>
+      <p class="text-base leading-relaxed" style="color:var(--color-text-secondary)">Publishers and app developers of any size dealing with unsold or underperforming banner inventory: from independent sites supplementing a small ad stack to larger publishers looking to squeeze more yield out of remnant slots without adding ad-ops overhead.</p>
     </div>
   </div>
 </section>
 
-<section class="py-20 max-md:py-14 text-center">
+<section class="py-32 max-md:py-20 text-center">
   <div class="max-w-[80rem] mx-auto px-8">
-    <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold tracking-tight mb-4">Your remnant inventory is worth more than it's earning</h2>
-    <p class="text-base mb-8" style="color:var(--color-text-secondary)">See what AI-optimized backfill can do for your fill rate.</p>
-    <a href="/" class="btn btn-primary">Get Your JS Tag</a>
+    <h2 class="font-serif leading-[1.08] tracking-tight mb-6" style="font-size:clamp(2rem,4vw,3rem);font-weight:550">your remnant inventory is worth more<br class="max-md:hidden"> than it's earning</h2>
+    <p class="text-base mb-10" style="color:var(--color-text-secondary)">See what AI-optimized backfill can do for your fill rate.</p>
+    <a href="/get-started" class="btn btn-primary btn-lg">Get Your JS Tag</a>
   </div>
 </section>
-</BaseLayout>

@@ -40,7 +40,7 @@ export default function SuperAdmin() {
             <Input placeholder="Slug" value={slug} onChange={e => setSlug(e.target.value)} className="flex-1 min-w-[120px]" />
             <Button onClick={create}>Create</Button>
           </div>
-          {error && <p className="text-sm text-red-500 mt-2">{error}</p>}
+          {error && <p className="text-sm text-destructive mt-2">{error}</p>}
         </CardContent>
       </Card>
 
@@ -56,8 +56,8 @@ export default function SuperAdmin() {
                 <td className="p-3 text-muted-foreground">{o.slug}</td>
                 <td className="p-3 text-muted-foreground">{new Date(o.createdAt).toLocaleDateString()}</td>
                 <td className="p-3 flex gap-2">
-                  <Link to={`/admin/orgs/${o._id}/users`} className="text-blue-600 hover:underline text-xs">Users</Link>
-                  <button onClick={() => remove(o._id)} className="text-red-600 hover:underline text-xs">Delete</button>
+                  <Link to={`/admin/orgs/${o._id}/users`} className="text-muted-foreground hover:text-foreground hover:underline text-xs">Users</Link>
+                  <button onClick={() => remove(o._id)} className="text-muted-foreground hover:text-foreground hover:underline text-xs">Delete</button>
                 </td>
               </tr>
             ))}

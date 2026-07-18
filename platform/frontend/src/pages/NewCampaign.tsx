@@ -53,7 +53,7 @@ export default function NewCampaign() {
             </div>
             <div>
               <p className="text-sm font-medium mb-2">Embed Snippet</p>
-              <pre className="bg-zinc-950 text-zinc-100 p-4 rounded-lg text-xs overflow-x-auto">{embed}</pre>
+              <pre className="bg-foreground text-background p-4 rounded-lg text-xs overflow-x-auto">{embed}</pre>
               <Button onClick={() => copy(embed)} className="mt-2">Copy Snippet</Button>
             </div>
             <Button onClick={() => nav('/')}>Back to Campaigns</Button>
@@ -68,7 +68,7 @@ export default function NewCampaign() {
       <Card>
         <CardHeader><CardTitle>New Campaign</CardTitle></CardHeader>
         <CardContent className="space-y-4">
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error && <p className="text-sm text-destructive">{error}</p>}
           <div className="space-y-1.5">
             <label className="text-sm font-medium">Campaign Name</label>
             <Input value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Summer Sale 2026" />

@@ -10,18 +10,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <section class="min-h-screen pt-32 pb-20 max-md:pt-20 max-md:pb-14 relative overflow-hidden flex flex-col justify-center">
   <video src="/hero-video.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover pointer-events-none" style="opacity:0.7;z-index:0"></video>
-  <div class="absolute inset-0 pointer-events-none" style="background:rgba(10,10,10,0.2);z-index:1"></div>
+  <div class="absolute inset-0 pointer-events-none" style="background:rgba(0,0,0,0.2);z-index:1"></div>
   <div class="max-w-[80rem] mx-auto px-8 relative" style="z-index:2">
     <div class="text-center max-w-[52rem] mx-auto mb-16">
       <h1 class="font-extrabold leading-[0.95] tracking-tight mb-6" style="font-size:clamp(3rem,7vw,5.5rem)">Turn unsold ad space<br>into <span style="color:var(--color-text-secondary)">revenue</span></h1>
       <p class="text-lg max-w-[30rem] mx-auto mb-10 leading-relaxed" style="color:var(--color-text-secondary)">One tag. AI-driven optimization. Zero conflict with your existing ad stack.</p>
       <div class="flex items-center justify-center gap-4">
-        <a href="/" class="btn btn-primary btn-lg">Get Your JS Tag</a>
+        <a href="/get-started" class="btn btn-primary btn-lg">Get Your JS Tag</a>
         <a href="/how-it-works" class="btn btn-ghost btn-lg">How it works &rarr;</a>
       </div>
     </div>
     <div class="max-w-[40rem] mx-auto">
-      <div style="background:rgba(10,10,10,0.55);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)">
+      <div style="background:rgba(0,0,0,0.55);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)">
         <div class="flex items-center gap-2 px-5 py-3" style="border-bottom:1px solid rgba(255,255,255,0.06)">
           <span class="w-2.5 h-2.5" style="background:rgba(255,255,255,0.15)"></span>
           <span class="w-2.5 h-2.5" style="background:rgba(255,255,255,0.15)"></span>
@@ -37,108 +37,167 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </div>
 </section>
 
-<section class="dark-noise py-24 max-md:py-16" style="background:var(--color-surface)">
-  <div class="max-w-[80rem] mx-auto px-8" style="position:relative;z-index:2">
-    <div class="grid grid-cols-3 gap-12 max-md:grid-cols-1">
-      <div>
-        <div class="text-[0.65rem] font-semibold uppercase tracking-widest mb-4" style="color:var(--color-text-tertiary)">For Publishers</div>
-        <h2 class="text-[clamp(1.5rem,3vw,2.25rem)] font-bold leading-snug tracking-tight mb-3">Fill remnant slots without touching your demand stack</h2>
-        <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">One tag. Same-day setup. No conflict with existing demand partners. AdBunny acts as a secondary layer — serving only when your primary stack passes.</p>
-      </div>
-      <div>
-        <div class="text-[0.65rem] font-semibold uppercase tracking-widest mb-4" style="color:var(--color-text-tertiary)">For Ad Networks</div>
-        <h2 class="text-[clamp(1.5rem,3vw,2.25rem)] font-bold leading-snug tracking-tight mb-3">Aggregated remnant inventory, one integration</h2>
-        <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">Programmatic access to remnant banner inventory across the AdBunny network with real-time performance reporting.</p>
-      </div>
-      <div>
-        <div class="text-[0.65rem] font-semibold uppercase tracking-widest mb-4" style="color:var(--color-text-tertiary)">AI Optimization</div>
-        <h2 class="text-[clamp(1.5rem,3vw,2.25rem)] font-bold leading-snug tracking-tight mb-3">The best-paying ad, every single impression</h2>
-        <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">Our AI evaluates demand per impression in real time, so every banner is the one most likely to pay best right now.</p>
-      </div>
-    </div>
+<!-- Manifesto -->
+<section class="py-36 max-md:py-24" style="border-top:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <p class="kicker mb-12 reveal-y">Every impression counts.</p>
+    <p class="dim-statement reveal-y max-w-[62rem]" style="font-size:clamp(1.75rem,4vw,3.25rem);color:var(--color-text)">
+      most ad stacks pass on a third of their impressions. thin demand, odd hours, the wrong geo, and the slot goes dark. AdBunny exists for that exact moment: when everyone else passes, your inventory still earns.
+    </p>
   </div>
 </section>
 
-<section class="py-24 max-md:py-16">
+<!-- Chapter 01: Publishers -->
+<section class="py-28 max-md:py-16" style="border-top:1px solid var(--color-border)">
   <div class="max-w-[80rem] mx-auto px-8">
-    <div class="grid grid-cols-[1fr_1fr] gap-20 items-start max-md:grid-cols-1 max-md:gap-12">
-      <div>
-        <h2 class="text-[clamp(2rem,4vw,3.5rem)] font-bold leading-[1.1] tracking-tight mb-6">fill rate improved from<br><span style="color:var(--color-text-tertiary)">~35% to 89%</span></h2>
-        <ul class="flex flex-col gap-3 mb-8">
-          <li class="flex items-center gap-3 text-sm" style="color:var(--color-text-secondary)"><span class="split-check"></span> No conflict with existing demand</li>
-          <li class="flex items-center gap-3 text-sm" style="color:var(--color-text-secondary)"><span class="split-check"></span> Same-day setup, no dev sprint</li>
-          <li class="flex items-center gap-3 text-sm" style="color:var(--color-text-secondary)"><span class="split-check"></span> AI optimizes every impression in real time</li>
-        </ul>
-        <a href="/publishers" class="split-link">learn more &rarr;</a>
+    <div class="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-12">
+      <div class="reveal-y">
+        <div class="flex items-baseline gap-5 mb-8">
+          <span class="font-serif text-sm" style="color:var(--color-text-tertiary)">01</span>
+          <p class="kicker">For Publishers</p>
+        </div>
+        <h2 class="font-serif leading-[1.08] tracking-tight mb-6" style="font-size:clamp(2.25rem,4vw,3.5rem);font-weight:550">fill every slot your<br>primary stack passes on</h2>
+        <p class="text-base leading-relaxed max-w-[26rem] mb-8" style="color:var(--color-text-secondary)">One tag. Same-day setup. No conflict with existing demand partners. AdBunny acts as a secondary layer, serving only when your primary stack passes.</p>
+        <a href="/publishers" class="split-link">learn more <span aria-hidden="true">&nearr;</span></a>
       </div>
-      <div>
-        <div style="background:var(--color-surface);border:1px solid var(--color-border)">
-          <div class="px-5 py-3" style="border-bottom:1px solid var(--color-border)">
-            <span class="text-xs font-semibold uppercase tracking-wider" style="color:var(--color-text-tertiary)">Fill Rate Improvement</span>
-          </div>
-          <div class="p-5 flex flex-col gap-2.5">
-            <div class="flex items-center gap-3"><span class="w-7 text-[0.7rem] text-right shrink-0" style="color:var(--color-text-tertiary)">Mon</span><div class="h-7 flex items-center justify-end px-2.5 split-bar--accent" style="width:87%"><span class="text-[0.7rem] font-semibold">87%</span></div></div>
-            <div class="flex items-center gap-3"><span class="w-7 text-[0.7rem] text-right shrink-0" style="color:var(--color-text-tertiary)">Tue</span><div class="h-7 flex items-center justify-end px-2.5 split-bar--accent" style="width:91%"><span class="text-[0.7rem] font-semibold">91%</span></div></div>
-            <div class="flex items-center gap-3"><span class="w-7 text-[0.7rem] text-right shrink-0" style="color:var(--color-text-tertiary)">Wed</span><div class="h-7 flex items-center justify-end px-2.5 split-bar--accent" style="width:89%"><span class="text-[0.7rem] font-semibold">89%</span></div></div>
-            <div class="flex items-center gap-3"><span class="w-7 text-[0.7rem] text-right shrink-0" style="color:var(--color-text-tertiary)">Thu</span><div class="h-7 flex items-center justify-end px-2.5 split-bar--accent" style="width:93%"><span class="text-[0.7rem] font-semibold">93%</span></div></div>
-            <div class="flex items-center gap-3"><span class="w-7 text-[0.7rem] text-right shrink-0" style="color:var(--color-text-tertiary)">Fri</span><div class="h-7 flex items-center justify-end px-2.5 split-bar--accent" style="width:88%"><span class="text-[0.7rem] font-semibold">88%</span></div></div>
-          </div>
+      <div class="reveal-y">
+        <div class="relative">
+          <img src="/images/metaphor-key-glow.png" alt="Publisher remnant inventory being filled automatically" class="w-full" />
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="dark-noise py-24 max-md:py-16" style="background:var(--color-surface)">
-  <div class="max-w-[80rem] mx-auto px-8" style="position:relative;z-index:2">
-    <div class="max-w-[32rem] mb-12">
-      <h2 class="text-[clamp(2rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight">the proof writes itself</h2>
-    </div>
-    <div class="grid grid-cols-3 gap-12 max-md:grid-cols-1">
-      <div>
-        <p class="text-sm leading-relaxed mb-4" style="color:var(--color-text-secondary)">"AdBunny integrated in minutes and our remnant fill rate went from ~30% to over 85% within the first week."</p>
-        <div class="text-sm font-semibold">Sarah Chen</div>
-        <div class="text-xs" style="color:var(--color-text-tertiary)">Head of Ad Ops, PublisherCo</div>
+<!-- Chapter 02: Ad Networks -->
+<section class="py-28 max-md:py-16" style="border-top:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <div class="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-12">
+      <div class="reveal-y max-md:order-2">
+        <div class="relative">
+          <img src="/images/metaphor-funnel-glow.png" alt="Aggregated remnant inventory across the AdBunny network" class="w-full" />
+        </div>
       </div>
-      <div>
-        <p class="text-sm leading-relaxed mb-4" style="color:var(--color-text-secondary)">"We were skeptical about another ad tag, but AdBunny's AI optimization genuinely outperformed our existing waterfall."</p>
-        <div class="text-sm font-semibold">Marcus Rivera</div>
-        <div class="text-xs" style="color:var(--color-text-tertiary)">Director of Monetization, AdNet+</div>
-      </div>
-      <div>
-        <p class="text-sm leading-relaxed mb-4" style="color:var(--color-text-secondary)">"The single-tag integration meant our engineering team didn't need to do anything. It just worked."</p>
-        <div class="text-sm font-semibold">Priya Patel</div>
-        <div class="text-xs" style="color:var(--color-text-tertiary)">VP Product, BannerFlow</div>
+      <div class="reveal-y max-md:order-1">
+        <div class="flex items-baseline gap-5 mb-8">
+          <span class="font-serif text-sm" style="color:var(--color-text-tertiary)">02</span>
+          <p class="kicker">For Ad Networks</p>
+        </div>
+        <h2 class="font-serif leading-[1.08] tracking-tight mb-6" style="font-size:clamp(2.25rem,4vw,3.5rem);font-weight:550">aggregated remnant,<br>one integration</h2>
+        <p class="text-base leading-relaxed max-w-[26rem] mb-8" style="color:var(--color-text-secondary)">Programmatic access to remnant banner inventory across the AdBunny network, with real-time performance reporting on every impression you buy.</p>
+        <a href="/advertisers" class="split-link">talk to demand team <span aria-hidden="true">&nearr;</span></a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="py-24 max-md:py-16">
-  <div class="max-w-[80rem] mx-auto px-8 text-center">
-    <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold tracking-tight mb-4">stop leaving remnant revenue on the table</h2>
-    <p class="text-base max-w-[28rem] mx-auto mb-8" style="color:var(--color-text-secondary)">One tag. AI-driven optimization. Revenue from inventory that used to sit empty.</p>
-    <a href="/" class="btn btn-primary btn-lg">Get Your JS Tag</a>
+<!-- Chapter 03: AI Optimization -->
+<section class="py-28 max-md:py-16" style="border-top:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <div class="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-12">
+      <div class="reveal-y">
+        <div class="flex items-baseline gap-5 mb-8">
+          <span class="font-serif text-sm" style="color:var(--color-text-tertiary)">03</span>
+          <p class="kicker">AI Optimization</p>
+        </div>
+        <h2 class="font-serif leading-[1.08] tracking-tight mb-6" style="font-size:clamp(2.25rem,4vw,3.5rem);font-weight:550">the best-paying ad,<br>every single impression</h2>
+        <p class="text-base leading-relaxed max-w-[26rem] mb-8" style="color:var(--color-text-secondary)">Our AI evaluates live demand per impression in real time, so every banner served is the one most likely to pay best right now.</p>
+        <a href="/how-it-works" class="split-link">how it works <span aria-hidden="true">&nearr;</span></a>
+      </div>
+      <div class="reveal-y">
+        <div class="relative">
+          <img src="/images/metaphor-compass-glow.png" alt="AI evaluating demand for every impression in real time" class="w-full" />
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="py-24 max-md:py-16">
-  <div class="max-w-[44rem] mx-auto px-8">
-    <div class="mb-8">
-      <h2 class="text-[clamp(1.5rem,2.5vw,2rem)] font-bold tracking-tight">FAQs</h2>
+<!-- Stat: fill rate -->
+<section class="py-32 max-md:py-20" style="border-top:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <div class="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-14">
+      <div class="reveal-y">
+        <p class="kicker mb-10">Network average, last 30 days</p>
+        <div class="flex items-baseline gap-6 flex-wrap">
+          <span class="font-serif leading-none" style="font-size:clamp(7rem,16vw,13rem);font-weight:600" id="fill-stat" data-target="89">89%</span>
+          <span class="text-base max-w-[10rem] leading-snug" style="color:var(--color-text-secondary)">fill rate on remnant inventory</span>
+        </div>
+        <p class="mt-8 text-sm" style="color:var(--color-text-tertiary)"><span class="font-serif text-2xl align-middle" style="color:var(--color-text-dim)">~35%</span>&nbsp;&nbsp;industry standard with static waterfalls</p>
+      </div>
+      <div class="reveal-y">
+        <p class="kicker mb-8">Fill rate by day</p>
+        <div class="flex flex-col gap-3">
+          <div class="flex items-center gap-4"><span class="w-8 text-[0.6875rem] uppercase tracking-widest text-right shrink-0" style="color:var(--color-text-tertiary)">Mon</span><div class="bar-wrap flex-1"><div class="h-6 flex items-center justify-end px-2 split-bar--accent bar-grow" style="width:87%"><span class="text-[0.6875rem] font-semibold">87%</span></div></div></div>
+          <div class="flex items-center gap-4"><span class="w-8 text-[0.6875rem] uppercase tracking-widest text-right shrink-0" style="color:var(--color-text-tertiary)">Tue</span><div class="bar-wrap flex-1"><div class="h-6 flex items-center justify-end px-2 split-bar--accent bar-grow" style="width:91%"><span class="text-[0.6875rem] font-semibold">91%</span></div></div></div>
+          <div class="flex items-center gap-4"><span class="w-8 text-[0.6875rem] uppercase tracking-widest text-right shrink-0" style="color:var(--color-text-tertiary)">Wed</span><div class="bar-wrap flex-1"><div class="h-6 flex items-center justify-end px-2 split-bar--accent bar-grow" style="width:89%"><span class="text-[0.6875rem] font-semibold">89%</span></div></div></div>
+          <div class="flex items-center gap-4"><span class="w-8 text-[0.6875rem] uppercase tracking-widest text-right shrink-0" style="color:var(--color-text-tertiary)">Thu</span><div class="bar-wrap flex-1"><div class="h-6 flex items-center justify-end px-2 split-bar--accent bar-grow" style="width:93%"><span class="text-[0.6875rem] font-semibold">93%</span></div></div></div>
+          <div class="flex items-center gap-4"><span class="w-8 text-[0.6875rem] uppercase tracking-widest text-right shrink-0" style="color:var(--color-text-tertiary)">Fri</span><div class="bar-wrap flex-1"><div class="h-6 flex items-center justify-end px-2 split-bar--accent bar-grow" style="width:88%"><span class="text-[0.6875rem] font-semibold">88%</span></div></div></div>
+        </div>
+        <a href="/publishers" class="split-link mt-10">see what publishers earn <span aria-hidden="true">&nearr;</span></a>
+      </div>
     </div>
-    <div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-32 max-md:py-20" style="border-top:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <p class="kicker mb-8 reveal-y">Trusted across the network</p>
+    <h2 class="font-serif leading-[1.08] tracking-tight mb-20 max-md:mb-12 reveal-y" style="font-size:clamp(2.5rem,5vw,4.25rem);font-weight:550">the proof<br>writes itself</h2>
+    <div class="grid grid-cols-3 gap-14 max-md:grid-cols-1">
+      <div class="reveal-y" style="border-top:1px solid var(--color-border);padding-top:2rem">
+        <p class="font-serif leading-relaxed mb-8" style="font-size:1.1875rem;color:var(--color-text)">AdBunny integrated in minutes and our remnant fill rate went from ~30% to over 85% within the first week.</p>
+        <div class="text-[0.6875rem] font-semibold uppercase" style="letter-spacing:0.22em">Sarah Chen</div>
+        <div class="text-xs mt-1.5" style="color:var(--color-text-tertiary)">Head of Ad Ops, PublisherCo</div>
+      </div>
+      <div class="reveal-y" style="border-top:1px solid var(--color-border);padding-top:2rem">
+        <p class="font-serif leading-relaxed mb-8" style="font-size:1.1875rem;color:var(--color-text)">We were skeptical about another ad tag, but AdBunny's AI optimization genuinely outperformed our existing waterfall.</p>
+        <div class="text-[0.6875rem] font-semibold uppercase" style="letter-spacing:0.22em">Marcus Rivera</div>
+        <div class="text-xs mt-1.5" style="color:var(--color-text-tertiary)">Director of Monetization, AdNet+</div>
+      </div>
+      <div class="reveal-y" style="border-top:1px solid var(--color-border);padding-top:2rem">
+        <p class="font-serif leading-relaxed mb-8" style="font-size:1.1875rem;color:var(--color-text)">The single-tag integration meant our engineering team didn't need to do anything. It just worked.</p>
+        <div class="text-[0.6875rem] font-semibold uppercase" style="letter-spacing:0.22em">Priya Patel</div>
+        <div class="text-xs mt-1.5" style="color:var(--color-text-tertiary)">VP Product, BannerFlow</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA: the door -->
+<section class="relative overflow-hidden" style="border-top:1px solid var(--color-border)">
+  <div class="grid grid-cols-2 max-md:grid-cols-1">
+    <div class="relative min-h-[32rem] max-md:min-h-[20rem]">
+      <img src="/images/metaphor-door-glow.png" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover" style="mask-image:linear-gradient(to right,#000 55%,transparent 100%);-webkit-mask-image:linear-gradient(to right,#000 55%,transparent 100%)" />
+    </div>
+    <div class="flex flex-col justify-center py-32 max-md:py-20 px-16 max-md:px-8">
+      <p class="kicker mb-10 reveal-y">Get started</p>
+      <h2 class="font-serif leading-[1.08] tracking-tight mb-6 reveal-y" style="font-size:clamp(2.5rem,4.5vw,4rem);font-weight:550">stop leaving remnant<br>revenue on the table</h2>
+      <p class="text-base leading-relaxed max-w-[24rem] mb-10 reveal-y" style="color:var(--color-text-secondary)">One tag. AI-driven optimization. Revenue from inventory that used to sit empty.</p>
+      <div class="reveal-y">
+        <a href="/get-started" class="btn btn-primary btn-lg">Get Your JS Tag</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="py-32 max-md:py-20" style="border-top:1px solid var(--color-border)">
+  <div class="max-w-[46rem] mx-auto px-8">
+    <h2 class="font-serif tracking-tight text-center mb-16 max-md:mb-10" style="font-size:clamp(2.25rem,4vw,3.25rem);font-weight:550">FAQs</h2>
+    <div style="border-top:1px solid var(--color-border)">
       <div style="border-bottom:1px solid var(--color-border)">
-        <button class="faq-q w-full text-left bg-transparent border-none py-5 text-[0.9375rem] font-semibold cursor-pointer flex justify-between items-center gap-4" style="color:var(--color-text)">Will AdBunny conflict with my existing ad stack?</button>
-        <div class="faq-a overflow-hidden transition-[max-height] duration-300 ease" style="max-height:0"><div class="pb-5 text-[0.9375rem] leading-relaxed" style="color:var(--color-text-secondary)">No. AdBunny is built to run on remnant inventory only, so it fills what your primary demand doesn't reach. There's no conflict because AdBunny acts as a secondary layer — it only serves ads when your primary stack passes on an impression.</div></div>
+        <button class="faq-q w-full text-left bg-transparent border-none py-6 text-[1.0625rem] font-semibold cursor-pointer flex justify-between items-center gap-4" style="color:var(--color-text)">Will AdBunny conflict with my existing ad stack?</button>
+        <div class="faq-a overflow-hidden transition-[max-height] duration-300 ease" style="max-height:0"><div class="pb-6 text-[0.9375rem] leading-relaxed max-w-[38rem]" style="color:var(--color-text-secondary)">No. AdBunny is built to run on remnant inventory only, so it fills what your primary demand doesn't reach. There's no conflict because AdBunny acts as a secondary layer: it only serves ads when your primary stack passes on an impression.</div></div>
       </div>
       <div style="border-bottom:1px solid var(--color-border)">
-        <button class="faq-q w-full text-left bg-transparent border-none py-5 text-[0.9375rem] font-semibold cursor-pointer flex justify-between items-center gap-4" style="color:var(--color-text)">How long does setup take?</button>
-        <div class="faq-a overflow-hidden transition-[max-height] duration-300 ease" style="max-height:0"><div class="pb-5 text-[0.9375rem] leading-relaxed" style="color:var(--color-text-secondary)">Typically minutes. It's one JS tag — not a waterfall, not an SDK integration, not a server-side change. Paste the tag into your pages or ad slots and you're live.</div></div>
+        <button class="faq-q w-full text-left bg-transparent border-none py-6 text-[1.0625rem] font-semibold cursor-pointer flex justify-between items-center gap-4" style="color:var(--color-text)">How long does setup take?</button>
+        <div class="faq-a overflow-hidden transition-[max-height] duration-300 ease" style="max-height:0"><div class="pb-6 text-[0.9375rem] leading-relaxed max-w-[38rem]" style="color:var(--color-text-secondary)">Typically minutes. It's one JS tag, not a waterfall, not an SDK integration, not a server-side change. Paste the tag into your pages or ad slots and you're live.</div></div>
       </div>
       <div style="border-bottom:1px solid var(--color-border)">
-        <button class="faq-q w-full text-left bg-transparent border-none py-5 text-[0.9375rem] font-semibold cursor-pointer flex justify-between items-center gap-4" style="color:var(--color-text)">What kind of fill rates can I expect?</button>
-        <div class="faq-a overflow-hidden transition-[max-height] duration-300 ease" style="max-height:0"><div class="pb-5 text-[0.9375rem] leading-relaxed" style="color:var(--color-text-secondary)">Our network average is ~89% fill rate on remnant inventory, compared to ~35% with traditional static waterfalls. Results vary by traffic and inventory, but most publishers see an immediate uplift.</div></div>
+        <button class="faq-q w-full text-left bg-transparent border-none py-6 text-[1.0625rem] font-semibold cursor-pointer flex justify-between items-center gap-4" style="color:var(--color-text)">What kind of fill rates can I expect?</button>
+        <div class="faq-a overflow-hidden transition-[max-height] duration-300 ease" style="max-height:0"><div class="pb-6 text-[0.9375rem] leading-relaxed max-w-[38rem]" style="color:var(--color-text-secondary)">Our network average is ~89% fill rate on remnant inventory, compared to ~35% with traditional static waterfalls. Results vary by traffic and inventory, but most publishers see an immediate uplift.</div></div>
       </div>
     </div>
   </div>

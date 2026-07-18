@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Contact AdBunny — Get in Touch"
+  description="Have questions about AdBunny's AI banner monetization? Reach out to our team for publisher onboarding, ad network partnerships, or general inquiries."
+  keywords="contact AdBunny, ad monetization support, publisher onboarding, ad network partnership"
+>
+
+<section class="min-h-[70vh] flex items-center" style="border-bottom:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8 py-32 max-md:py-20 w-full">
+    <div class="max-w-[42rem]">
+      <p class="kicker mb-8">Contact</p>
+      <h1 class="font-serif leading-[1.08] tracking-tight mb-6" style="font-size:clamp(2.5rem,5vw,4rem);font-weight:550">let's talk</h1>
+      <p class="text-base leading-relaxed" style="color:var(--color-text-secondary)">Whether you're a publisher looking to fill remnant inventory, an ad network seeking programmatic access, or just have questions — we'd like to hear from you.</p>
+    </div>
+  </div>
+</section>
+
+<section class="py-32 max-md:py-20" style="border-bottom:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <div class="grid grid-cols-[1fr_1.4fr] gap-20 max-md:grid-cols-1 max-md:gap-12">
+      <div>
+        <p class="kicker mb-10">Send us a message</p>
+        <div class="max-w-[28rem]">
+          <div class="mb-10" style="border-top:1px solid var(--color-border);padding-top:1.5rem">
+            <h3 class="font-serif text-xl tracking-tight mb-2" style="font-weight:550">publisher onboarding</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">Ready to monetize remnant inventory? We'll get you set up in minutes.</p>
+          </div>
+          <div class="mb-10" style="border-top:1px solid var(--color-border);padding-top:1.5rem">
+            <h3 class="font-serif text-xl tracking-tight mb-2" style="font-weight:550">ad network partnerships</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">Programmatic access to aggregated remnant inventory across the network.</p>
+          </div>
+          <div style="border-top:1px solid var(--color-border);padding-top:1.5rem">
+            <h3 class="font-serif text-xl tracking-tight mb-2" style="font-weight:550">general inquiries</h3>
+            <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">Questions about the platform, pricing, or anything else.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <form id="contact-form" class="flex flex-col gap-6">
+          <div>
+            <label for="name" class="block text-xs font-semibold uppercase tracking-widest mb-3" style="color:var(--color-text-tertiary)">Name</label>
+            <input type="text" id="name" name="name" required autocomplete="name" class="contact-input" placeholder="Your name" />
+          </div>
+          <div>
+            <label for="email" class="block text-xs font-semibold uppercase tracking-widest mb-3" style="color:var(--color-text-tertiary)">Email</label>
+            <input type="email" id="email" name="email" required autocomplete="email" class="contact-input" placeholder="you@company.com" />
+          </div>
+          <div>
+            <label for="message" class="block text-xs font-semibold uppercase tracking-widest mb-3" style="color:var(--color-text-tertiary)">Message</label>
+            <textarea id="message" name="message" required rows="5" class="contact-input resize-none" placeholder="Tell us what you need"></textarea>
+          </div>
+          <div class="mt-2">
+            <button type="submit" class="btn btn-primary btn-lg" id="submit-btn">Send Message</button>
+            <p id="form-status" class="text-sm mt-4" style="color:var(--color-text-secondary);display:none"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+</BaseLayout>
+
+<style>
+  .contact-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 0.9375rem;
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background: transparent;
+    border: 1px solid var(--color-border-strong);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .contact-input::placeholder {
+    color: var(--color-text-dim);
+  }
+  .contact-input:focus {
+    border-color: var(--color-text-tertiary);
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const status = document.getElementById('form-status') as HTMLElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = (document.getElementById('name') as HTMLInputElement).value.trim();
+    const email = (document.getElementById('email') as HTMLInputElement).value.trim();
+    const message = (document.getElementById('message') as HTMLTextAreaElement).value.trim();
+
+    if (!name || !email || !message) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    status.style.display = 'none';
+
+    try {
+      const res = await fetch('https://api-inform.bythub.in/?formId=8FEDgUaDkQDdntPII62c', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (res.ok) {
+        status.textContent = 'Message sent. We\'ll get back to you shortly.';
+        status.style.color = 'var(--color-text-secondary)';
+        status.style.display = 'block';
+        form.reset();
+      } else {
+        throw new Error('Request failed');
+      }
+    } catch {
+      status.textContent = 'Something went wrong. Please try again or email us directly at info@adbunny.in';
+      status.style.color = '#f87171';
+      status.style.display = 'block';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Message';
+    }
+  });
+</script>

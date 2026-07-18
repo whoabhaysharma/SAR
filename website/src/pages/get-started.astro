@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Get Started with AdBunny — Early Access"
+  description="AdBunny is launching soon. Request early access to our AI-optimized banner monetization platform for remnant inventory."
+  keywords="AdBunny early access, banner monetization waitlist, remnant inventory monetization"
+>
+
+<section class="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
+  <img src="/images/coming-soon-bg.png" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover" style="opacity:0.85" />
+  <div class="absolute inset-0" style="background:linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.7) 100%)"></div>
+  <div class="relative z-10 max-w-[40rem] mx-auto px-8 py-24 max-md:py-16 w-full">
+    <p class="kicker mb-6" style="color:rgba(255,255,255,0.4)">Early Access</p>
+    <h1 class="font-serif leading-[1.06] tracking-tight mb-6" style="font-size:clamp(2.5rem,6vw,4.5rem);font-weight:550;color:#fff">something<br>great is coming</h1>
+    <p class="text-sm leading-relaxed max-w-[24rem] mx-auto mb-10" style="color:rgba(255,255,255,0.45)">AdBunny is launching soon. Be the first to know when we go live and get priority access.</p>
+
+    <form id="early-form" class="max-w-[24rem] mx-auto">
+      <div class="flex flex-col gap-3 mb-6">
+        <input type="text" id="early-name" name="name" required autocomplete="name" placeholder="Your name" class="early-input" />
+        <input type="email" id="early-email" name="email" required autocomplete="email" placeholder="you@company.com" class="early-input" />
+        <input type="text" id="early-company" name="company" placeholder="Company name (optional)" class="early-input" />
+      </div>
+      <button type="submit" class="early-btn" id="early-submit">Request Early Access</button>
+      <p id="early-status" class="text-sm mt-6" style="color:rgba(255,255,255,0.5);display:none"></p>
+    </form>
+  </div>
+</section>
+
+</BaseLayout>
+
+<style>
+  .early-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-family: var(--font-sans);
+    color: #fff;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    backdrop-filter: blur(8px);
+  }
+  .early-input::placeholder {
+    color: rgba(255,255,255,0.3);
+  }
+  .early-input:focus {
+    border-color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.1);
+  }
+  .early-btn {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    border: none;
+    line-height: 1;
+    background: #fff;
+    color: #000;
+    transition: opacity 0.2s;
+  }
+  .early-btn:hover {
+    opacity: 0.85;
+  }
+  .early-btn:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+</style>
+
+<script>
+  const form = document.getElementById('early-form');
+  const status = document.getElementById('early-status');
+  const submitBtn = document.getElementById('early-submit');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('early-name').value.trim();
+    const email = document.getElementById('early-email').value.trim();
+    const company = document.getElementById('early-company').value.trim();
+
+    if (!name || !email) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+    status.style.display = 'none';
+
+    const message = company
+      ? `Early access request from ${name} at ${company} (${email})`
+      : `Early access request from ${name} (${email})`;
+
+    try {
+      const res = await fetch('https://api-inform.bythub.in/?formId=8FEDgUaDkQDdntPII62c', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (res.ok) {
+        status.textContent = "You're on the list. We'll notify you when AdBunny launches.";
+        status.style.color = 'rgba(255,255,255,0.7)';
+        status.style.display = 'block';
+        form.reset();
+      } else {
+        throw new Error('Request failed');
+      }
+    } catch {
+      status.textContent = 'Something went wrong. Try again or email us at info@adbunny.in';
+      status.style.color = '#f87171';
+      status.style.display = 'block';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Request Early Access';
+    }
+  });
+</script>

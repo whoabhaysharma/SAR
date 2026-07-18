@@ -4,79 +4,124 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout
   title="How AdBunny's AI Banner Optimization Works"
-  description="See exactly how AdBunny's single JS tag and AI optimization layer turn remnant ad inventory into revenue — step by step."
+  description="See exactly how AdBunny's single JS tag and AI optimization layer turn remnant ad inventory into revenue, step by step."
   keywords="how AI banner optimization works, ad tag integration, real-time banner optimization, ad monetization process"
 >
 
-<section class="pt-28 pb-12 max-md:pt-20">
-  <div class="max-w-[80rem] mx-auto px-8">
-    <div class="max-w-[44rem]">
-      <h1 class="font-extrabold leading-[1.05] tracking-tight mb-4" style="font-size:clamp(2.25rem,5vw,3.5rem)">From empty ad slot to optimized revenue — step by step</h1>
-      <p class="text-lg leading-relaxed" style="color:var(--color-text-secondary)">Four steps. One tag. Zero engineering lift.</p>
-    </div>
+<section class="min-h-[70vh] flex items-center" style="border-bottom:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8 py-32 max-md:py-20 w-full">
+    <p class="kicker mb-8">How It Works</p>
+    <h1 class="font-serif leading-[1.08] tracking-tight mb-6" style="font-size:clamp(2.5rem,5vw,4rem);font-weight:550">from empty ad slot to optimized revenue</h1>
+    <p class="text-base leading-relaxed" style="color:var(--color-text-secondary)">Four steps. One tag. Zero engineering lift.</p>
   </div>
 </section>
 
-<section class="py-16 max-md:py-12">
+<!-- Step 01 -->
+<section class="py-28 max-md:py-16" style="border-bottom:1px solid var(--color-border)">
   <div class="max-w-[80rem] mx-auto px-8">
-    <div class="max-w-[56rem]">
-      <div class="grid grid-cols-[auto_1fr] gap-x-10 gap-y-16 max-md:gap-x-6 max-md:gap-y-10" style="color:var(--color-text)">
-        <div class="text-[clamp(4rem,6vw,6rem)] font-extrabold leading-none tracking-tight" style="color:var(--color-text-tertiary);opacity:0.3">1</div>
-        <div class="pt-3">
-          <h3 class="text-2xl font-bold tracking-tight mb-2" style="color:var(--color-text)">Add the tag</h3>
-          <p class="text-base leading-relaxed" style="color:var(--color-text-secondary)">Paste a single JavaScript snippet into the pages or slots you want AdBunny to cover. No SDK, no server integration, no waterfall configuration.</p>
+    <div class="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-12">
+      <div>
+        <div class="flex items-baseline gap-5 mb-8">
+          <span class="font-serif text-sm" style="color:var(--color-text-tertiary)">01</span>
+          <p class="kicker">Add the tag</p>
         </div>
-        <div class="text-[clamp(4rem,6vw,6rem)] font-extrabold leading-none tracking-tight" style="color:var(--color-text-tertiary);opacity:0.3">2</div>
-        <div class="pt-3">
-          <h3 class="text-2xl font-bold tracking-tight mb-2" style="color:var(--color-text)">AdBunny evaluates available demand</h3>
-          <p class="text-base leading-relaxed" style="color:var(--color-text-secondary)">When a covered slot loads, AdBunny's optimization layer evaluates the banner demand available for that specific impression in real time.</p>
-        </div>
-        <div class="text-[clamp(4rem,6vw,6rem)] font-extrabold leading-none tracking-tight" style="color:var(--color-text-tertiary);opacity:0.3">3</div>
-        <div class="pt-3">
-          <h3 class="text-2xl font-bold tracking-tight mb-2" style="color:var(--color-text)">The AI selects the best-paying banner</h3>
-          <p class="text-base leading-relaxed" style="color:var(--color-text-secondary)">Rather than following a fixed, static call order, the system picks whichever available banner is likely to generate the most revenue for that impression, right now.</p>
-        </div>
-        <div class="text-[clamp(4rem,6vw,6rem)] font-extrabold leading-none tracking-tight" style="color:var(--color-text-tertiary);opacity:0.3">4</div>
-        <div class="pt-3">
-          <h3 class="text-2xl font-bold tracking-tight mb-2" style="color:var(--color-text)">The slot fills, you get paid</h3>
-          <p class="text-base leading-relaxed" style="color:var(--color-text-secondary)">The impression fills, and revenue starts flowing from inventory that used to sit empty or monetize at low, static rates.</p>
-        </div>
+        <h2 class="font-serif leading-[1.08] tracking-tight mb-6" style="font-size:clamp(2rem,4vw,3rem);font-weight:550">paste a single JavaScript snippet</h2>
+        <p class="text-base leading-relaxed max-w-[28rem]" style="color:var(--color-text-secondary)">No SDK, no server integration, no waterfall configuration. Just one tag into the pages or slots you want AdBunny to cover.</p>
+      </div>
+      <div>
+        <img src="/images/step1-tag-glow.png" alt="Adding the AdBunny tag to your page" class="w-full" />
       </div>
     </div>
   </div>
 </section>
 
-<section class="dark-noise py-24 max-md:py-16" style="background:var(--color-surface)">
-  <div class="max-w-[80rem] mx-auto px-8" style="position:relative;z-index:2">
-    <div class="max-w-[40rem]">
-      <h2 class="text-[clamp(1.75rem,3vw,2.25rem)] font-bold leading-snug tracking-tight mb-8">What you don't have to do</h2>
-      <div class="flex flex-col gap-5">
-        <div class="flex items-center gap-4">
-          <span class="split-check"></span>
-          <span class="text-base" style="color:var(--color-text-secondary)">No waterfall to build or maintain</span>
+<!-- Step 02 -->
+<section class="py-28 max-md:py-16" style="border-bottom:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <div class="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-12">
+      <div class="max-md:order-2">
+        <img src="/images/step2-evaluate-glow.png" alt="AdBunny evaluating available demand" class="w-full" />
+      </div>
+      <div class="max-md:order-1">
+        <div class="flex items-baseline gap-5 mb-8">
+          <span class="font-serif text-sm" style="color:var(--color-text-tertiary)">02</span>
+          <p class="kicker">Evaluate demand</p>
         </div>
-        <div class="flex items-center gap-4">
-          <span class="split-check"></span>
-          <span class="text-base" style="color:var(--color-text-secondary)">No line items to configure</span>
-        </div>
-        <div class="flex items-center gap-4">
-          <span class="split-check"></span>
-          <span class="text-base" style="color:var(--color-text-secondary)">No manual optimization or A/B testing of network order</span>
-        </div>
-        <div class="flex items-center gap-4">
-          <span class="split-check"></span>
-          <span class="text-base" style="color:var(--color-text-secondary)">No conflict with your existing primary demand</span>
-        </div>
+        <h2 class="font-serif leading-[1.08] tracking-tight mb-6" style="font-size:clamp(2rem,4vw,3rem);font-weight:550">AdBunny evaluates available demand</h2>
+        <p class="text-base leading-relaxed max-w-[28rem]" style="color:var(--color-text-secondary)">When a covered slot loads, AdBunny's optimization layer evaluates the banner demand available for that specific impression in real time.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="py-24 max-md:py-16 text-center">
+<!-- Step 03 -->
+<section class="py-28 max-md:py-16" style="border-bottom:1px solid var(--color-border)">
   <div class="max-w-[80rem] mx-auto px-8">
-    <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold tracking-tight mb-3">See it running on your own inventory</h2>
-    <p class="text-base mb-8" style="color:var(--color-text-secondary)">One tag. Four steps. Revenue from inventory that used to sit empty.</p>
-    <a href="/" class="btn btn-primary">Get Your JS Tag</a>
+    <div class="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-12">
+      <div>
+        <div class="flex items-baseline gap-5 mb-8">
+          <span class="font-serif text-sm" style="color:var(--color-text-tertiary)">03</span>
+          <p class="kicker">AI selects the best</p>
+        </div>
+        <h2 class="font-serif leading-[1.08] tracking-tight mb-6" style="font-size:clamp(2rem,4vw,3rem);font-weight:550">the AI picks the best-paying banner</h2>
+        <p class="text-base leading-relaxed max-w-[28rem]" style="color:var(--color-text-secondary)">Rather than following a fixed, static call order, the system picks whichever available banner is likely to generate the most revenue for that impression, right now.</p>
+      </div>
+      <div>
+        <img src="/images/step3-ai-glow.png" alt="AI selecting the best-paying banner" class="w-full" />
+      </div>
+    </div>
   </div>
 </section>
-</BaseLayout>
+
+<!-- Step 04 -->
+<section class="py-28 max-md:py-16" style="border-bottom:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <div class="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-12">
+      <div class="max-md:order-2">
+        <img src="/images/metaphor-hourglass-glow.png" alt="Revenue flowing from filled impressions" class="w-full" />
+      </div>
+      <div class="max-md:order-1">
+        <div class="flex items-baseline gap-5 mb-8">
+          <span class="font-serif text-sm" style="color:var(--color-text-tertiary)">04</span>
+          <p class="kicker">Get paid</p>
+        </div>
+        <h2 class="font-serif leading-[1.08] tracking-tight mb-6" style="font-size:clamp(2rem,4vw,3rem);font-weight:550">the slot fills, you get paid</h2>
+        <p class="text-base leading-relaxed max-w-[28rem]" style="color:var(--color-text-secondary)">The impression fills, and revenue starts flowing from inventory that used to sit empty or monetize at low, static rates.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What you don't have to do -->
+<section class="py-32 max-md:py-20" style="border-bottom:1px solid var(--color-border)">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <p class="kicker mb-12">What you don't have to do</p>
+    <div class="flex flex-col gap-5 max-w-[36rem]">
+      <div class="flex items-center gap-4">
+        <span class="split-check"></span>
+        <span class="text-base" style="color:var(--color-text-secondary)">No waterfall to build or maintain</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="split-check"></span>
+        <span class="text-base" style="color:var(--color-text-secondary)">No line items to configure</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="split-check"></span>
+        <span class="text-base" style="color:var(--color-text-secondary)">No manual optimization or A/B testing of network order</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="split-check"></span>
+        <span class="text-base" style="color:var(--color-text-secondary)">No conflict with your existing primary demand</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-32 max-md:py-20 text-center">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <h2 class="font-serif leading-[1.08] tracking-tight mb-6" style="font-size:clamp(2rem,4vw,3rem);font-weight:550">see it running on your own inventory</h2>
+    <p class="text-base mb-10" style="color:var(--color-text-secondary)">One tag. Four steps. Revenue from inventory that used to sit empty.</p>
+    <a href="/get-started" class="btn btn-primary btn-lg">Get Your JS Tag</a>
+  </div>
+</section>

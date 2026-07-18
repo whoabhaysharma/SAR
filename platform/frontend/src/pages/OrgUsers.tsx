@@ -48,7 +48,7 @@ export default function OrgUsers() {
             </select>
             <Button onClick={create}>Add</Button>
           </div>
-          {error && <p className="text-sm text-red-500 mt-2">{error}</p>}
+          {error && <p className="text-sm text-destructive mt-2">{error}</p>}
         </CardContent>
       </Card>
 
@@ -66,7 +66,7 @@ export default function OrgUsers() {
                 <td className="p-3 text-muted-foreground">{new Date(u.createdAt).toLocaleDateString()}</td>
                 <td className="p-3">
                   {u.role !== 'org_admin' && (
-                    <button onClick={() => remove(u._id)} className="text-red-600 hover:underline text-xs">Remove</button>
+                    <button onClick={() => remove(u._id)} className="text-muted-foreground hover:text-foreground hover:underline text-xs">Remove</button>
                   )}
                 </td>
               </tr>

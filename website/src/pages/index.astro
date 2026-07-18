@@ -8,9 +8,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   keywords="remnant inventory monetization, banner ad monetization platform, AI ad optimization, programmatic banner ads, unsold ad inventory, single tag ad monetization"
 >
 
-<section class="dark-noise pt-32 pb-20 max-md:pt-20 max-md:pb-14 relative overflow-hidden" style="background:radial-gradient(ellipse at 70% 40%, rgba(255,255,255,0.04) 0%, transparent 55%), var(--color-bg)">
-  <img src="/images/hero-bg-dots.jpg" alt="" class="absolute inset-0 w-full h-full object-cover pointer-events-none" style="opacity:0.08" />
-  <div class="max-w-[80rem] mx-auto px-8">
+<section class="pt-32 pb-20 max-md:pt-20 max-md:pb-14 relative overflow-hidden">
+  <video src="/hero-video.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover pointer-events-none" style="opacity:0.7;z-index:0"></video>
+  <div class="absolute inset-0 pointer-events-none" style="background:rgba(10,10,10,0.2);z-index:1"></div>
+  <div class="max-w-[80rem] mx-auto px-8 relative" style="z-index:2">
     <div class="text-center max-w-[52rem] mx-auto mb-16">
       <h1 class="font-extrabold leading-[0.95] tracking-tight mb-6" style="font-size:clamp(3rem,7vw,5.5rem)">Turn unsold ad space<br>into <span style="color:var(--color-text-secondary)">revenue</span></h1>
       <p class="text-lg max-w-[30rem] mx-auto mb-10 leading-relaxed" style="color:var(--color-text-secondary)">One tag. AI-driven optimization. Zero conflict with your existing ad stack.</p>
@@ -20,35 +21,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
     <div class="max-w-[40rem] mx-auto">
-      <div style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <div class="flex items-center gap-2 px-5 py-3" style="border-bottom:1px solid var(--color-border)">
-          <span class="w-2.5 h-2.5" style="background:rgba(255,255,255,0.1)"></span>
-          <span class="w-2.5 h-2.5" style="background:rgba(255,255,255,0.1)"></span>
-          <span class="w-2.5 h-2.5" style="background:rgba(255,255,255,0.1)"></span>
+      <div style="background:rgba(10,10,10,0.55);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)">
+        <div class="flex items-center gap-2 px-5 py-3" style="border-bottom:1px solid rgba(255,255,255,0.06)">
+          <span class="w-2.5 h-2.5" style="background:rgba(255,255,255,0.15)"></span>
+          <span class="w-2.5 h-2.5" style="background:rgba(255,255,255,0.15)"></span>
+          <span class="w-2.5 h-2.5" style="background:rgba(255,255,255,0.15)"></span>
           <span class="ml-3 text-xs" style="color:var(--color-text-tertiary)">adbunny.js</span>
         </div>
-        <pre class="p-6 font-mono text-xs leading-relaxed overflow-x-auto" style="color:var(--color-text-secondary)"><code style="color:var(--color-text-secondary)">&lt;script src="cdn.adbunny.in/adbunny.js"
+        <pre class="p-6 font-mono text-xs leading-relaxed overflow-x-auto" style="color:rgba(255,255,255,0.6)"><code style="color:rgba(255,255,255,0.85)">&lt;script src="cdn.adbunny.in/adbunny.js"
   data-publisher="your-tag"
   data-target="#ad-slot"&gt;
 &lt;/script&gt;</code></pre>
-      </div>
-    </div>
-    <div class="flex items-center justify-center gap-14 mt-14 max-md:flex-col max-md:gap-6">
-      <div class="text-center">
-        <div class="text-2xl font-extrabold tracking-tight" style="color:var(--color-text)">394K</div>
-        <div class="text-xs mt-1" style="color:var(--color-text-tertiary)">events / sec</div>
-      </div>
-      <div class="text-center">
-        <div class="text-2xl font-extrabold tracking-tight" style="color:var(--color-text)">&lt;5 min</div>
-        <div class="text-xs mt-1" style="color:var(--color-text-tertiary)">setup time</div>
-      </div>
-      <div class="text-center">
-        <div class="text-2xl font-extrabold tracking-tight" style="color:var(--color-text)">89%</div>
-        <div class="text-xs mt-1" style="color:var(--color-text-tertiary)">fill rate</div>
-      </div>
-      <div class="text-center">
-        <div class="text-2xl font-extrabold tracking-tight" style="color:var(--color-text)">0</div>
-        <div class="text-xs mt-1" style="color:var(--color-text-tertiary)">conflicts</div>
       </div>
     </div>
   </div>

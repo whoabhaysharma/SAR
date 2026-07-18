@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { Icon } from 'astro-icon/components';
 ---
 
 <BaseLayout
@@ -8,64 +7,56 @@ import { Icon } from 'astro-icon/components';
   description="AdBunny builds AI-optimized banner monetization technology so publishers can turn remnant inventory into revenue with minimal engineering effort."
   keywords="AdBunny ad monetization company, AI ad tech company, banner monetization technology"
 >
-<section class="page-header">
-  <div class="container">
-    <h1>We Built AdBunny Because Remnant Inventory Deserved Better Tools</h1>
+
+<section class="pt-28 pb-12 max-md:pt-20">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <div class="max-w-[44rem]">
+      <h1 class="font-extrabold leading-[1.05] tracking-tight mb-4" style="font-size:clamp(2.25rem,5vw,3.5rem)">We built AdBunny because remnant inventory deserved better tools</h1>
+    </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
-    <div class="two-col">
-      <div class="col-text">
-        <p>Remnant inventory monetization has historically meant static waterfalls, manual network ordering, and revenue left on the table simply because nobody had time to re-optimize the call order every week. AdBunny replaces that with an AI optimization layer that does it continuously, automatically, per impression.</p>
+<section class="dark-noise py-20 max-md:py-14" style="background:var(--color-surface)">
+  <div class="max-w-[80rem] mx-auto px-8" style="position:relative;z-index:2">
+    <div class="max-w-[40rem]">
+      <p class="text-base leading-relaxed" style="color:var(--color-text-secondary)">Remnant inventory monetization has historically meant static waterfalls, manual network ordering, and revenue left on the table simply because nobody had time to re-optimize the call order every week. AdBunny replaces that with an AI optimization layer that does it continuously, automatically, per impression.</p>
+    </div>
+  </div>
+</section>
+
+<section class="py-20 max-md:py-14">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <h2 class="text-[clamp(1.75rem,3vw,2.25rem)] font-bold leading-snug tracking-tight mb-10">What we believe</h2>
+    <div class="grid grid-cols-3 gap-10 max-md:grid-cols-1">
+      <div>
+        <h3 class="text-lg font-bold tracking-tight mb-2">Integration should be simple</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">One JS tag should be enough — never an engineering sprint.</p>
       </div>
-      <div class="col-visual">
-        <img src="/images/about-tools.png" alt="Analogy: rusty old tools replaced by a sleek modern smart tool — like AdBunny replaces static waterfalls">
+      <div>
+        <h3 class="text-lg font-bold tracking-tight mb-2">Optimization should be real-time</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">Per impression, not on a quarterly review cycle.</p>
+      </div>
+      <div>
+        <h3 class="text-lg font-bold tracking-tight mb-2">Remnant shouldn't require trade-offs</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">It should just fill the gap — no choosing between your primary stack and new demand.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section section-alt">
-  <div class="container">
-    <span class="label">Our Beliefs</span>
-    <h2 class="section-title">What We Believe</h2>
-    <div class="grid-3">
-      <div class="card">
-        <div class="card-icon"><Icon name="lucide:target" /></div>
-        <h3>Integration should be simple</h3>
-        <p>One JS tag should be enough — never an engineering sprint.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon"><Icon name="lucide:zap" /></div>
-        <h3>Optimization should be real-time</h3>
-        <p>Per impression, not on a quarterly review cycle.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon"><Icon name="lucide:handshake" /></div>
-        <h3>Remnant shouldn't require trade-offs</h3>
-        <p>It should just fill the gap — no choosing between your primary stack and new demand.</p>
-      </div>
+<section class="dark-noise py-20 max-md:py-14" style="background:var(--color-surface)">
+  <div class="max-w-[80rem] mx-auto px-8" style="position:relative;z-index:2">
+    <div class="max-w-[40rem]">
+      <h2 class="text-[clamp(1.75rem,3vw,2.25rem)] font-bold leading-snug tracking-tight mb-4">Who we work with</h2>
+      <p class="text-base leading-relaxed" style="color:var(--color-text-secondary)">Publishers and app developers monetizing remnant inventory, and ad networks, DSPs, and media buyers looking for efficient, programmatic access to that inventory.</p>
     </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
-    <span class="label">Who We Work With</span>
-    <h2 class="section-title">Who We Work With</h2>
-    <p class="section-sub">Publishers and app developers monetizing remnant inventory, and ad networks, DSPs, and media buyers looking for efficient, programmatic access to that inventory.</p>
-  </div>
-</section>
-
-<section class="section-cta">
-  <div class="container">
-    <h2>See AdBunny in Action</h2>
-    <div class="hero-actions" style="justify-content:center;">
-      <a href="/" class="btn btn-primary">Get Your JS Tag</a>
-      <a href="/advertisers" class="btn btn-outline">Talk to Our Demand Team</a>
-    </div>
+<section class="py-20 max-md:py-14 text-center">
+  <div class="max-w-[80rem] mx-auto px-8">
+    <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold tracking-tight mb-8">See AdBunny in action</h2>
+    <a href="/" class="btn btn-primary">Get Your JS Tag</a>
   </div>
 </section>
 </BaseLayout>

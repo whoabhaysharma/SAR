@@ -1,7 +1,6 @@
 ---
 const { title, description, keywords = '' } = Astro.props;
 const path = Astro.url.pathname;
-const active = (p: string) => path === p ? 'active' : '';
 import '../styles/global.css';
 ---
 
@@ -16,57 +15,62 @@ import '../styles/global.css';
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css">
 </head>
-<body class="bg-bg text-text antialiased">
-<nav class="sticky top-0 z-50 border-b border-border backdrop-blur-lg" style="background:rgba(255,255,255,0.92)">
-  <div class="max-w-[76rem] mx-auto px-8 flex items-center justify-between h-14">
-    <a href="/" class="font-extrabold text-[1.0625rem] tracking-tight flex items-center gap-0.5">
-      Ad<span class="text-accent">Bunny</span>
+<body>
+<nav class="sticky top-0 z-50" style="background:rgba(10,10,10,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)">
+  <div class="max-w-[80rem] mx-auto px-8 flex items-center justify-between h-14">
+    <a href="/" class="font-extrabold text-lg tracking-tight" style="color:var(--color-text)">
+      Ad<span style="color:var(--color-text-tertiary)">Bunny</span>
     </a>
-    <div class="nav-links items-center gap-0.5">
-      <a href="/publishers" class={"text-sm font-medium px-3 py-[0.35rem] transition-colors duration-150 ".concat(path === '/publishers' ? 'text-text' : 'text-text-secondary hover:text-text')}>Publishers</a>
-      <a href="/advertisers" class={"text-sm font-medium px-3 py-[0.35rem] transition-colors duration-150 ".concat(path === '/advertisers' ? 'text-text' : 'text-text-secondary hover:text-text')}>Ad Networks</a>
-      <a href="/how-it-works" class={"text-sm font-medium px-3 py-[0.35rem] transition-colors duration-150 ".concat(path === '/how-it-works' ? 'text-text' : 'text-text-secondary hover:text-text')}>How It Works</a>
-      <a href="/resources" class={"text-sm font-medium px-3 py-[0.35rem] transition-colors duration-150 ".concat(path === '/resources' ? 'text-text' : 'text-text-secondary hover:text-text')}>Resources</a>
-      <a href="/faq" class={"text-sm font-medium px-3 py-[0.35rem] transition-colors duration-150 ".concat(path === '/faq' ? 'text-text' : 'text-text-secondary hover:text-text')}>FAQ</a>
-      <a href="/about" class={"text-sm font-medium px-3 py-[0.35rem] transition-colors duration-150 ".concat(path === '/about' ? 'text-text' : 'text-text-secondary hover:text-text')}>About</a>
+    <div class="nav-links items-center gap-1">
+      <a href="/publishers" class={"text-sm font-medium px-3 py-[0.35rem] transition-colors ".concat(path === '/publishers' ? 'text-white' : 'text-gray-500 hover:text-white')}>Publishers</a>
+      <a href="/advertisers" class={"text-sm font-medium px-3 py-[0.35rem] transition-colors ".concat(path === '/advertisers' ? 'text-white' : 'text-gray-500 hover:text-white')}>Ad Networks</a>
+      <a href="/how-it-works" class={"text-sm font-medium px-3 py-[0.35rem] transition-colors ".concat(path === '/how-it-works' ? 'text-white' : 'text-gray-500 hover:text-white')}>How It Works</a>
+      <a href="/resources" class={"text-sm font-medium px-3 py-[0.35rem] transition-colors ".concat(path === '/resources' ? 'text-white' : 'text-gray-500 hover:text-white')}>Resources</a>
+      <a href="/faq" class={"text-sm font-medium px-3 py-[0.35rem] transition-colors ".concat(path === '/faq' ? 'text-white' : 'text-gray-500 hover:text-white')}>FAQ</a>
+      <a href="/about" class={"text-sm font-medium px-3 py-[0.35rem] transition-colors ".concat(path === '/about' ? 'text-white' : 'text-gray-500 hover:text-white')}>About</a>
       <a href="/" class="nav-cta">Get Your JS Tag</a>
     </div>
     <button class="md:hidden flex flex-col gap-[5px] bg-transparent border-none cursor-pointer p-1" aria-label="Menu">
-      <span class="block w-5 h-0.5 bg-text"></span>
-      <span class="block w-5 h-0.5 bg-text"></span>
-      <span class="block w-5 h-0.5 bg-text"></span>
+      <span class="block w-5 h-0.5" style="background:var(--color-text)"></span>
+      <span class="block w-5 h-0.5" style="background:var(--color-text)"></span>
+      <span class="block w-5 h-0.5" style="background:var(--color-text)"></span>
     </button>
   </div>
 </nav>
 
 <slot />
 
-<footer style="background:var(--color-dark-bg);border-top:1px solid var(--color-dark-border);color:var(--color-dark-text)" class="py-16 pb-8">
-  <div class="max-w-[76rem] mx-auto px-8 grid grid-cols-[2fr_1fr_1fr_1fr] gap-12 max-md:grid-cols-2">
-    <div class="max-md:col-span-2">
-      <a href="/" class="font-extrabold text-[1.0625rem] tracking-tight" style="color:var(--color-dark-text)">Ad<span style="color:var(--color-dark-secondary)">Bunny</span></a>
-      <p style="color:var(--color-dark-secondary)" class="text-sm leading-relaxed mt-2 max-w-[20rem]">AI-optimized banner monetization for remnant inventory. One tag, real-time optimization, zero conflict with your existing ad stack.</p>
+<footer class="dark-noise py-20 pb-8" style="background:var(--color-dark-bg);color:var(--color-dark-text)">
+  <div class="max-w-[80rem] mx-auto px-8" style="position:relative;z-index:2">
+    <div class="mb-12">
+      <a href="/" class="font-extrabold text-xl tracking-tight" style="color:var(--color-text)">
+        Ad<span style="color:var(--color-text-tertiary)">Bunny</span>
+      </a>
     </div>
-    <div>
-      <h4 style="color:var(--color-dark-secondary)" class="text-[0.7rem] font-semibold uppercase tracking-widest mb-4">Platform</h4>
-      <a href="/publishers" class="block text-sm py-1 transition-opacity hover:opacity-80" style="color:var(--color-dark-secondary)">For Publishers</a>
-      <a href="/advertisers" class="block text-sm py-1 transition-opacity hover:opacity-80" style="color:var(--color-dark-secondary)">For Ad Networks</a>
-      <a href="/how-it-works" class="block text-sm py-1 transition-opacity hover:opacity-80" style="color:var(--color-dark-secondary)">How It Works</a>
-      <a href="/resources" class="block text-sm py-1 transition-opacity hover:opacity-80" style="color:var(--color-dark-secondary)">Resources</a>
+    <div class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-12 max-md:grid-cols-2 max-md:gap-8">
+      <div class="max-md:col-span-2">
+        <p class="text-sm leading-relaxed max-w-[22rem]" style="color:var(--color-text-tertiary)">AI-optimized banner monetization for remnant inventory. One tag, real-time optimization, zero conflict with your existing ad stack.</p>
+      </div>
+      <div>
+        <h4 class="text-xs font-semibold uppercase tracking-widest mb-4" style="color:var(--color-text-tertiary)">Platform</h4>
+        <a href="/publishers" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">For Publishers</a>
+        <a href="/advertisers" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">For Ad Networks</a>
+        <a href="/how-it-works" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">How It Works</a>
+        <a href="/resources" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">Resources</a>
+      </div>
+      <div>
+        <h4 class="text-xs font-semibold uppercase tracking-widest mb-4" style="color:var(--color-text-tertiary)">Company</h4>
+        <a href="/about" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">About</a>
+        <a href="/faq" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">FAQ</a>
+      </div>
+      <div>
+        <h4 class="text-xs font-semibold uppercase tracking-widest mb-4" style="color:var(--color-text-tertiary)">Contact</h4>
+        <a href="/" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">Get Your JS Tag</a>
+        <a href="/advertisers" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">Talk to Demand Team</a>
+      </div>
     </div>
-    <div>
-      <h4 style="color:var(--color-dark-secondary)" class="text-[0.7rem] font-semibold uppercase tracking-widest mb-4">Company</h4>
-      <a href="/about" class="block text-sm py-1 transition-opacity hover:opacity-80" style="color:var(--color-dark-secondary)">About</a>
-      <a href="/faq" class="block text-sm py-1 transition-opacity hover:opacity-80" style="color:var(--color-dark-secondary)">FAQ</a>
-    </div>
-    <div>
-      <h4 style="color:var(--color-dark-secondary)" class="text-[0.7rem] font-semibold uppercase tracking-widest mb-4">Contact</h4>
-      <a href="/" class="block text-sm py-1 transition-opacity hover:opacity-80" style="color:var(--color-dark-secondary)">Get Your JS Tag</a>
-      <a href="/advertisers" class="block text-sm py-1 transition-opacity hover:opacity-80" style="color:var(--color-dark-secondary)">Talk to Demand Team</a>
-    </div>
-    <div class="col-span-full pt-5 mt-6 flex justify-between flex-wrap gap-2 text-xs" style="border-top:1px solid var(--color-dark-border);color:var(--color-dark-secondary)">
+    <div class="mt-16 pt-8 flex justify-between flex-wrap gap-2 text-xs" style="color:var(--color-text-tertiary);border-top:1px solid var(--color-dark-border)">
       <span>&copy; 2026 AdBunny. All rights reserved.</span>
       <span>AI banner monetization platform</span>
     </div>

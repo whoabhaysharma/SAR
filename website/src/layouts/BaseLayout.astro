@@ -41,13 +41,13 @@ import '../styles/global.css';
 </script>
 </head>
 <body>
-<nav class="sticky top-0 z-50" style="background:rgba(10,10,10,0.95)" aria-label="Main navigation">
-  <div class="max-w-[80rem] mx-auto px-8 flex items-center justify-between h-16">
+<nav class="fixed top-0 left-0 right-0 z-50" aria-label="Main navigation">
+  <div class="flex items-center justify-between h-16 px-8">
     <a href="/" class="font-extrabold text-lg tracking-tight" style="color:var(--color-text)" aria-label="AdBunny home">AdBunny</a>
-    <div class="nav-links items-center gap-6" role="navigation" aria-label="Site links">
-      <a href="/publishers" class={"text-sm transition-opacity ".concat(path === '/publishers' ? 'opacity-100' : 'opacity-40 hover:opacity-100')} style="color:var(--color-text)">Publishers</a>
-      <a href="/how-it-works" class={"text-sm transition-opacity ".concat(path === '/how-it-works' ? 'opacity-100' : 'opacity-40 hover:opacity-100')} style="color:var(--color-text)">How It Works</a>
-      <a href="/about" class={"text-sm transition-opacity ".concat(path === '/about' ? 'opacity-100' : 'opacity-40 hover:opacity-100')} style="color:var(--color-text)">About</a>
+    <div class="nav-links items-center gap-8" role="navigation" aria-label="Site links">
+      <a href="/publishers" class={"text-sm transition-opacity ".concat(path === '/publishers' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">Publishers</a>
+      <a href="/how-it-works" class={"text-sm transition-opacity ".concat(path === '/how-it-works' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">How It Works</a>
+      <a href="/about" class={"text-sm transition-opacity ".concat(path === '/about' ? 'opacity-100' : 'opacity-50 hover:opacity-100')} style="color:var(--color-text)">About</a>
       <a href="/" class="text-sm font-semibold transition-opacity hover:opacity-70" style="color:var(--color-text)">Get Started</a>
     </div>
     <button class="md:hidden flex flex-col gap-[5px] bg-transparent border-none cursor-pointer p-1" aria-label="Toggle menu">
@@ -64,9 +64,7 @@ import '../styles/global.css';
 <footer class="dark-noise py-20 pb-8" style="background:var(--color-dark-bg);color:var(--color-dark-text)" role="contentinfo">
   <div class="max-w-[80rem] mx-auto px-8" style="position:relative;z-index:2">
     <div class="mb-12">
-      <a href="/" class="font-extrabold text-xl tracking-tight" style="color:var(--color-text)">
-        Ad<span style="color:var(--color-text-tertiary)">Bunny</span>
-      </a>
+      <a href="/" class="font-extrabold text-xl tracking-tight" style="color:var(--color-text)">Ad<span style="color:var(--color-text-tertiary)">Bunny</span></a>
     </div>
     <div class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-12 max-md:grid-cols-2 max-md:gap-8">
       <div class="max-md:col-span-2">
@@ -86,6 +84,7 @@ import '../styles/global.css';
       </div>
       <div>
         <h4 class="text-xs font-semibold uppercase tracking-widest mb-4" style="color:var(--color-text-tertiary)">Contact</h4>
+        <a href="mailto:info@adbunny.in" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">info@adbunny.in</a>
         <a href="/" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">Get Your JS Tag</a>
         <a href="/advertisers" class="block text-sm py-1.5 hover:opacity-70 transition-opacity" style="color:var(--color-text-secondary)">Talk to Demand Team</a>
       </div>
